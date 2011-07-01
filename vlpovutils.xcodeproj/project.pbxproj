@@ -1,0 +1,373 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		1E9D95E913BDCD5B009E873D /* all */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 1E9D95F213BDCD88009E873D /* Build configuration list for PBXAggregateTarget "all" */;
+			buildPhases = (
+			);
+			dependencies = (
+				1E9D95ED13BDCD5F009E873D /* PBXTargetDependency */,
+				1E9D95EF13BDCD62009E873D /* PBXTargetDependency */,
+			);
+			name = all;
+			productName = all;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		1E9D958913BDB65C009E873D /* motionfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D958813BDB65C009E873D /* motionfield.cpp */; };
+		1E9D95C713BDC9C1009E873D /* vlpov_motionfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D95C613BDC9C1009E873D /* vlpov_motionfield.cpp */; };
+		1E9D95E513BDCD3E009E873D /* libvlpov.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libvlpov.a */; };
+		1EE3B71013BCA2ED00CEE4D8 /* povread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1EE3B70F13BCA2ED00CEE4D8 /* povread.cpp */; };
+		1EE3B71313BCA6BC00CEE4D8 /* vlpov.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1EE3B71213BCA6BC00CEE4D8 /* vlpov.hpp */; };
+		1EE3B71613BCAAB900CEE4D8 /* vec2motion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1EE3B71513BCAAB900CEE4D8 /* vec2motion.cpp */; };
+		1EE3B72D13BCB4DB00CEE4D8 /* look2motion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1EE3B72C13BCB4DB00CEE4D8 /* look2motion.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1E9D95E313BDCD39009E873D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = vlpov;
+		};
+		1E9D95EC13BDCD5F009E873D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = vlpov;
+		};
+		1E9D95EE13BDCD62009E873D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1E9D95C113BDC98F009E873D;
+			remoteInfo = vlpov_motionfield;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1E9D958813BDB65C009E873D /* motionfield.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = motionfield.cpp; sourceTree = "<group>"; };
+		1E9D95C213BDC98F009E873D /* vlpov_motionfield */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = vlpov_motionfield; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E9D95C613BDC9C1009E873D /* vlpov_motionfield.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vlpov_motionfield.cpp; sourceTree = "<group>"; };
+		1EE3B70E13BC8BC200CEE4D8 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		1EE3B70F13BCA2ED00CEE4D8 /* povread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = povread.cpp; sourceTree = "<group>"; };
+		1EE3B71213BCA6BC00CEE4D8 /* vlpov.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vlpov.hpp; sourceTree = "<group>"; };
+		1EE3B71513BCAAB900CEE4D8 /* vec2motion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vec2motion.cpp; sourceTree = "<group>"; };
+		1EE3B72C13BCB4DB00CEE4D8 /* look2motion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = look2motion.cpp; sourceTree = "<group>"; };
+		D2AAC046055464E500DB518D /* libvlpov.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvlpov.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1E9D95C013BDC98F009E873D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E9D95E513BDCD3E009E873D /* libvlpov.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D289987405E68DCB004EDB86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* vlpovutils */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6A0FF2B0290797F04C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = vlpovutils;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1EE3B72C13BCB4DB00CEE4D8 /* look2motion.cpp */,
+				1EE3B71513BCAAB900CEE4D8 /* vec2motion.cpp */,
+				1EE3B70F13BCA2ED00CEE4D8 /* povread.cpp */,
+				1EE3B71213BCA6BC00CEE4D8 /* vlpov.hpp */,
+				1E9D958813BDB65C009E873D /* motionfield.cpp */,
+				1E9D95C613BDC9C1009E873D /* vlpov_motionfield.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC046055464E500DB518D /* libvlpov.a */,
+				1E9D95C213BDC98F009E873D /* vlpov_motionfield */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C6A0FF2B0290797F04C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				1EE3B70E13BC8BC200CEE4D8 /* README.txt */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC043055464E500DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1EE3B71313BCA6BC00CEE4D8 /* vlpov.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1E9D95C113BDC98F009E873D /* vlpov_motionfield */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1E9D95C813BDC9C1009E873D /* Build configuration list for PBXNativeTarget "vlpov_motionfield" */;
+			buildPhases = (
+				1E9D95BF13BDC98F009E873D /* Sources */,
+				1E9D95C013BDC98F009E873D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1E9D95E413BDCD39009E873D /* PBXTargetDependency */,
+			);
+			name = vlpov_motionfield;
+			productName = vlpov_motionfield;
+			productReference = 1E9D95C213BDC98F009E873D /* vlpov_motionfield */;
+			productType = "com.apple.product-type.tool";
+		};
+		D2AAC045055464E500DB518D /* vlpov */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "vlpov" */;
+			buildPhases = (
+				D2AAC043055464E500DB518D /* Headers */,
+				D2AAC044055464E500DB518D /* Sources */,
+				D289987405E68DCB004EDB86 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = vlpov;
+			productName = vlpovutils;
+			productReference = D2AAC046055464E500DB518D /* libvlpov.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "vlpovutils" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* vlpovutils */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC045055464E500DB518D /* vlpov */,
+				1E9D95C113BDC98F009E873D /* vlpov_motionfield */,
+				1E9D95E913BDCD5B009E873D /* all */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1E9D95BF13BDC98F009E873D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E9D95C713BDC9C1009E873D /* vlpov_motionfield.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2AAC044055464E500DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1EE3B71013BCA2ED00CEE4D8 /* povread.cpp in Sources */,
+				1EE3B71613BCAAB900CEE4D8 /* vec2motion.cpp in Sources */,
+				1EE3B72D13BCB4DB00CEE4D8 /* look2motion.cpp in Sources */,
+				1E9D958913BDB65C009E873D /* motionfield.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1E9D95E413BDCD39009E873D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2AAC045055464E500DB518D /* vlpov */;
+			targetProxy = 1E9D95E313BDCD39009E873D /* PBXContainerItemProxy */;
+		};
+		1E9D95ED13BDCD5F009E873D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2AAC045055464E500DB518D /* vlpov */;
+			targetProxy = 1E9D95EC13BDCD5F009E873D /* PBXContainerItemProxy */;
+		};
+		1E9D95EF13BDCD62009E873D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1E9D95C113BDC98F009E873D /* vlpov_motionfield */;
+			targetProxy = 1E9D95EE13BDCD62009E873D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91EC08733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = vlpov;
+			};
+			name = Debug;
+		};
+		1DEB91ED08733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = vlpov;
+			};
+			name = Release;
+		};
+		1DEB91F008733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../CImg,
+					../..,
+					"$(BOOST_PATH)",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+			};
+			name = Debug;
+		};
+		1DEB91F108733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../CImg,
+					../..,
+					"$(BOOST_PATH)",
+				);
+				PREBINDING = NO;
+			};
+			name = Release;
+		};
+		1E9D95C413BDC98F009E873D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PRODUCT_NAME = vlpov_motionfield;
+			};
+			name = Debug;
+		};
+		1E9D95C513BDC98F009E873D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PRODUCT_NAME = vlpov_motionfield;
+			};
+			name = Release;
+		};
+		1E9D95EA13BDCD5B009E873D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = all;
+			};
+			name = Debug;
+		};
+		1E9D95EB13BDCD5B009E873D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = all;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "vlpov" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91EC08733DB70010E9CD /* Debug */,
+				1DEB91ED08733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "vlpovutils" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91F008733DB70010E9CD /* Debug */,
+				1DEB91F108733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1E9D95C813BDC9C1009E873D /* Build configuration list for PBXNativeTarget "vlpov_motionfield" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1E9D95C413BDC98F009E873D /* Debug */,
+				1E9D95C513BDC98F009E873D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1E9D95F213BDCD88009E873D /* Build configuration list for PBXAggregateTarget "all" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1E9D95EA13BDCD5B009E873D /* Debug */,
+				1E9D95EB13BDCD5B009E873D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
