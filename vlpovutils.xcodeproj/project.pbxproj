@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1E16570E13BE1D1A00206759 /* vec2camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E16570D13BE1D1A00206759 /* vec2camera.cpp */; };
 		1E9D958913BDB65C009E873D /* motionfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D958813BDB65C009E873D /* motionfield.cpp */; };
 		1E9D95C713BDC9C1009E873D /* vlpov_motionfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D95C613BDC9C1009E873D /* vlpov_motionfield.cpp */; };
 		1E9D95E513BDCD3E009E873D /* libvlpov.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libvlpov.a */; };
@@ -56,6 +57,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E16570D13BE1D1A00206759 /* vec2camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vec2camera.cpp; sourceTree = "<group>"; };
 		1E9D958813BDB65C009E873D /* motionfield.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = motionfield.cpp; sourceTree = "<group>"; };
 		1E9D95C213BDC98F009E873D /* vlpov_motionfield */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = vlpov_motionfield; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E9D95C613BDC9C1009E873D /* vlpov_motionfield.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vlpov_motionfield.cpp; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1E16570D13BE1D1A00206759 /* vec2camera.cpp */,
 				1EE3B72C13BCB4DB00CEE4D8 /* look2motion.cpp */,
 				1EE3B71513BCAAB900CEE4D8 /* vec2motion.cpp */,
 				1EE3B70F13BCA2ED00CEE4D8 /* povread.cpp */,
@@ -217,6 +220,7 @@
 				1EE3B71613BCAAB900CEE4D8 /* vec2motion.cpp in Sources */,
 				1EE3B72D13BCB4DB00CEE4D8 /* look2motion.cpp in Sources */,
 				1E9D958913BDB65C009E873D /* motionfield.cpp in Sources */,
+				1E16570E13BE1D1A00206759 /* vec2camera.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -303,3 +303,170 @@ int vlpov_get_cam(const char* info_file, VLPovCamera &cam)
 
     return 0;
 }
+
+int vlpov_povread2(const char* file, VLPovCamera2 &cam)
+{
+    size_t file_len = strlen(file);
+    char *info_file = new char[file_len+5];
+    const char *info_suffix = ".txt";
+    std::copy(file, file+file_len, info_file);
+    std::copy(info_suffix, info_suffix+5, info_file+file_len);
+    int retval = vlpov_get_cam2(info_file, cam);
+    delete [] info_file;
+    return retval;
+}
+
+int vlpov_povread2(const char* file, VLPovImage<double> &z, VLPovCamera2 &cam)
+{
+    int retval;
+     
+    size_t file_len = strlen(file);
+    
+    // % --------------------------------------------------------------------
+    // %                                                               Camera
+    // % --------------------------------------------------------------------
+    
+    char *info_file = new char[file_len+5];
+    const char *info_suffix = ".txt";
+    std::copy(file, file+file_len, info_file);
+    std::copy(info_suffix, info_suffix+5, info_file+file_len);
+    retval = vlpov_get_cam2(info_file, cam);
+    delete [] info_file;
+    if(retval != 0) {
+        return retval;
+    }
+    
+    // % --------------------------------------------------------------------
+    // %                                                             Z-buffer
+    // % --------------------------------------------------------------------
+        
+    char *depth_file = new char[file_len+7];
+    const char *depth_suffix = ".depth";
+    std::copy(file, file+file_len, depth_file);
+    std::copy(depth_suffix, depth_suffix+7, depth_file+file_len);
+    z.resize(cam.width, cam.height);
+    retval = z.load(depth_file);
+    delete [] depth_file;
+    if(retval != 0) {
+        return retval;
+    }
+    
+    // % The z stored by POV is the euclidean distance from the camera
+    // % center. Recover the right one.
+
+    double fx = cam.K(0,0);
+    double fy = cam.K(1,1);
+    double s = cam.K(0,1);
+    double cx = cam.K(0,2);
+    double cy = cam.K(1,2);
+    
+    // compute inverse intrinsic matrix;
+    double ifx = 1./fx;
+    double ify = 1./fy;
+    double is = -s/(fx*fy);
+    double icx = is*cy -cx/fx;
+    double icy = -cy/fy;
+
+    for(int y = 0; y < z.height(); ++y) {
+        for(int x = 0; x < z.width(); ++x) {
+            // apply inverse intrisics
+            double xi = ifx*x + is*y + icx;
+            double yi = ify*y + icy;
+            // Z is a distance from optical center, transform it to Z in camera frame
+            z(x,y) /= sqrt(pow(xi,2)+pow(yi,2)+1.);
+        }
+    }
+
+    return retval;
+}
+
+
+int vlpov_get_cam2(const char* info_file, VLPovCamera2 &cam)
+{
+    cam.width  = 1 ;
+    cam.height = 1 ;
+    cam.focal  = 1. ;
+    cam.angle  = M_PI/2 ;
+    cam.K      = identity_matrix<double>(3) ;
+    cam.R      = identity_matrix<double>(3) ;
+    
+    // f = fopen(info_file, 'r') ;
+    FILE *f = fopen(info_file, "r");
+    if (f == NULL) {
+        return -1;
+    }
+    
+    char output_name[256];
+    char cam_type[256];
+    
+    // the scanning format comes from the vlpov povray patch
+    int count = fscanf(f,
+                       "output_name   = '%256s ;\n"
+                       "screen_height = %d ;\n"
+                       "screen_width  = %d ;\n"
+                       "cam_type      = '%256s ;\n"
+                       "cam_pos       = [%lf %lf %lf]' ;\n"
+                       "cam_dir       = [%lf %lf %lf]' ;\n"
+                       "cam_up        = [%lf %lf %lf]' ;\n"
+                       "cam_right     = [%lf %lf %lf]' ;\n"
+                       "cam_sky       = [%lf %lf %lf]' ;\n"
+                       "cam_lookat    = [%lf %lf %lf]' ;\n"
+                       "cam_fpoint    = [%lf %lf %lf]' ;\n"
+                       "cam_focal     = %lf ;\n"
+                       "cam_angle     = %lf ;\n",
+                       output_name,
+                       &cam.height,
+                       &cam.width,
+                       cam_type,
+                       &cam.pos[0], 
+                       &cam.pos[1], 
+                       &cam.pos[2],
+                       &cam.dir[0], 
+                       &cam.dir[1], 
+                       &cam.dir[2],
+                       &cam.up[0], 
+                       &cam.up[1], 
+                       &cam.up[2],
+                       &cam.right[0], 
+                       &cam.right[1], 
+                       &cam.right[2],
+                       &cam.sky[0], 
+                       &cam.sky[1], 
+                       &cam.sky[2],
+                       &cam.lookat[0],
+                       &cam.lookat[1],
+                       &cam.lookat[2],
+                       &cam.fpoint[0],
+                       &cam.fpoint[1],
+                       &cam.fpoint[2],
+                       &cam.focal,
+                       &cam.angle) ;
+    if (count != 27) {
+        return -1;
+    }
+    
+    // % pov uses a left-handed system: convert.
+    // e=diag([1 1 -1]) ;
+    matrix33 e = diagonal(1.,1.,-1.);
+    // cam_pos  = e*cam_pos ;
+    cam.pos(2) = -cam.pos(2);
+    // cam_up   = e*cam_up ;
+    cam.up(2) = -cam.up(2);
+    // cam_dir  = e*cam_dir ;
+    cam.dir(2) = -cam.dir(2);
+    // camright = e*cam_right ; <= bug in vlpov, but only its norm is used anyway
+    cam.right(2) = -cam.right(2);
+
+    // % After sourcing the script we are left with (at least)
+    // %
+    // % cam_pos
+    // % cam_dir
+    // % cam_up
+    // % cam_right
+    // %
+    // % We compute: K, R, t
+
+    vlpov_vec2camera(cam.width, cam.height, cam.pos, cam.dir, cam.up, cam.right, cam.K, cam.R, cam.t);
+    
+    return 0;
+}

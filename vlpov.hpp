@@ -35,6 +35,25 @@ public:
     }
 };
 
+class VLPovCamera2 {
+public:
+    int width; //< image width in pixels
+    int height; //< image height in pixels
+    boost::numeric::ublas::vector3 pos;
+    boost::numeric::ublas::vector3 dir;
+    boost::numeric::ublas::vector3 up;
+    boost::numeric::ublas::vector3 right;
+    boost::numeric::ublas::vector3 sky;
+    boost::numeric::ublas::vector3 lookat;
+    boost::numeric::ublas::vector3 fpoint;
+    double focal; //< focal length in camera units (normalized to 1 by vlpov_cam_read() )
+    double angle;
+    
+    boost::numeric::ublas::matrix33 K;
+    boost::numeric::ublas::matrix33 R;
+    boost::numeric::ublas::vector3 t;
+};
+
 // a minimalist image class for depth and motion images
 template<typename T>
 class VLPovImage {
@@ -148,6 +167,16 @@ private:
     T *_data;
 };
 
+void vlpov_vec2camera(int width,
+                      int height,
+                      const boost::numeric::ublas::vector3 &pos,
+                      const boost::numeric::ublas::vector3 &dir,
+                      const boost::numeric::ublas::vector3 &up,
+                      const boost::numeric::ublas::vector3 &right,
+                      boost::numeric::ublas::matrix33 &K,
+                      boost::numeric::ublas::matrix33 &R,
+                      boost::numeric::ublas::vector3 &T);
+
 // VEC2MOTION  Convert "look-at" camera specification to matrices
 //   [R,T]=VEC2MOTION(POS, DIR, UP) take postion POS, "direction"
 //   vector DIR and "up" vector UP and returns camera rotation R
@@ -186,6 +215,14 @@ int vlpov_get_cam(const char* info_file, VLPovCamera &cam);
 
 int vlpov_povread(const char* file, VLPovCamera &cam);
 int vlpov_povread(const char* file, VLPovImage<double> &z, VLPovCamera &cam);
+
+// --------------------------------------------------------------------
+// Reads some camera parameters from info file (right_length,
+// direction_length, up_length, near and far values)
+int vlpov_get_cam2(const char* info_file, VLPovCamera2 &cam);
+
+int vlpov_povread2(const char* file, VLPovCamera2 &cam);
+int vlpov_povread2(const char* file, VLPovImage<double> &z, VLPovCamera2 &cam);
 
 // Compute the motion field (m1x,m1y) in pixel units from scene with depth z1 seen from camera cam1 to camera cam2
 // the dimensions of z1, m1x and m1y are the same as cam1
