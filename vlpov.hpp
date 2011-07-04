@@ -227,3 +227,5 @@ int vlpov_povread2(const char* file, VLPovImage<double> &z, VLPovCamera2 &cam);
 // Compute the motion field (m1x,m1y) in pixel units from scene with depth z1 seen from camera cam1 to camera cam2
 // the dimensions of z1, m1x and m1y are the same as cam1
 void vlpov_motionfield(const VLPovCamera &cam1, const VLPovImage<double> &z1, const VLPovCamera &cam2, VLPovImage<double> &m1x, VLPovImage<double> &m1y);
+void vlpov_motionfield2(const VLPovCamera2 &cam1, const VLPovImage<double> &z1, const VLPovCamera2 &cam2, VLPovImage<double> &m1x, VLPovImage<double> &m1y);
+
