@@ -10,8 +10,6 @@ global_settings {
 
 #include "ppcontent.inc"
 
-#declare cam_start= ;
-#declare cam_end=<0.0,1.0,1.0> ;
 #declare l=clock / 10 ;
 
 camera{

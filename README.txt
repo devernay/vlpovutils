@@ -23,4 +23,4 @@ megapov +w320 +h240 +a0.0 +j0.0 +L../data +Itest.pov +Otest.png
 megapov +w320 +h240 +a0.0 +j0.0 +L../data +KFI1 +KFF30 +KI0.0 +KF3.0 +Itest_anim.pov +Otest_anim.png
 
 megapov -UV +w320 +h240 +a0.0 +j0.0 +L../data +Itest_nonortho.pov +Otest_nonortho.png
-megapov -UV +w320 +h240 +a0.0 +j0.0 +L../data +KFI1 +KF10 +KI0.0 +KF1.0 +Itest_stereo.pov +Otest_stereo.png
+megapov -UV +w320 +h240 +a0.0 +j0.0 +L../data +KFI1 +KFF10 +KI0.0 +KF1.0 +Itest_stereo.pov +Otest_stereo.png
