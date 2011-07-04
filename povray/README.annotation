@@ -1,0 +1,277 @@
+                       MegaPOV Annotation Patch
+                            Andrea Vedaldi
+                   http://www.cs.ucla.edu/~vedaldi
+
+The MegaPOV ANNOTATION patch extends MegaPOV to export camera and
+structure information for the rendered scenes.
+
+---------------------------------------------------------------------------
+INSTALLATION
+---------------------------------------------------------------------------
+
+- Download povray-3.6 generic UNIX source code and extract the
+  archive.
+
+- Configure, compile and install
+  
+  > cd povray-3.6
+  > ./configure COMPILED_BY="<YOURNAME>" \
+                --disable-lib-checks --prefix=<PATH_TO_POVRAY>
+  > make
+  > make install
+
+- Download megapov-1.2.1 generic UNIX source code and extract the
+  archive.
+
+- Apply the patch
+  
+  > cd megapov-1.2.1
+  > patch -p1 < <PATH_TO_PATCH>/megapov-annotation-0.1.patch 
+  patching file source/patches/patches.h
+  patching file source/patches/postproc.cpp
+  patching file source/renderio.cpp
+
+- Configure, compile and install the patched MegaPOV
+  
+  > cd megapov-1.2.1
+  > ./configure COMPILED_BY="<YOURNAME>" \
+                --disable-lib-checks --prefix=<PATH_TO_POVRAY>
+  > make 
+  > make install
+
+---------------------------------------------------------------------------
+USAGE
+---------------------------------------------------------------------------
+
+The ANNOTATION patch is rather straightforward to use. By default, it
+will save along with any output image `image.png' an annotation file
+`image.txt' such as:
+
+screen_height = 240 ;
+screen_width  = 320 ;
+cam_type      = 'perspective' ;
+cam_pos       = [         0        0.5         -4]' ;
+cam_dir       = [         0 -0.1860521   1.488417]' ;
+cam_up        = [         0  0.9922779  0.1240347]' ;
+cam_right     = [  1.333333          0          0]' ;
+
+The paramters are sufficient to get the camera intrisics (see
+below). For convenience, the annotation file is a simple ASCII file
+and follows the syntax of a MATLAB script.
+
+ANNOTATION can also export an accurate depht map of the scene. In
+order to do this, simply call the PP_Init_Depth() macro somewhere in
+the POV-Ray script. This macro, which belongs to MegaPOV POST
+PROCESSING patch, normally enables the caching of the pixel depts in a
+temporary file, which is deleted on exit. When the ANNOTATION patch is
+active, this file is preserved and renamed to `image.depth'. The file
+is an array of DOUBLE values in big-endian (network) format, with one
+depth value per pixel, in row major order.
+
+It should be noted that the depth information is not the Z component
+of the 3-D points relative to the camra reference frame (as one might
+expect); rather, it is the actual Euclidean distance of the 3-D points
+from the camera center (which is independent from the reference
+frame).
+
+At this time, the following camera models are supported:
+
+* PERSPECTIVE CAMERA. This camera is defined by the position,
+  direction, right, and up vectors. The latter three vectors define
+  the obvious 3-D reference frame of the camra (in inertial
+  coordinates). We also have
+
+  focal  = norm(direction)
+  aspect = norm(right)/norm(up)
+  angle  = 2*atan(norm(right)/2 / norm(direction))
+
+  Pixels span the horizontal range [-norm(right),norm(right)] and
+  their center is in the middle. For example, the leftmost column of
+  pixels has X coordinate equal to norm(right) * (-1+1/N).
+
+---------------------------------------------------------------------------
+APPENDIX: EXTRACTING THE PATCH
+---------------------------------------------------------------------------
+
+1. Move the patched MegaPOV to megapov-1.2.1-patched/
+2. Extract the original source code to megapov-1.2.1/
+3. Run
+   true || make -C megapov-1.2.1-patched distclean
+   diff -urN -x '*libraries*' -x '*~' -x config.h -x conf.h \
+           megapov-1.2.1 \
+           megapov-1.2.1-patched \
+           > megapov-annotation-0.1.patch
+
+---------------------------------------------------------------------------
+APPENDIX: OVERVIEW OF THE POST PROCESSING PATCH
+---------------------------------------------------------------------------
+
+The ANNOTATION patch is based on MegaPOV POST PROCESSING patch. The
+POST PROCESS patch does the following modifications to the POV-Ray
+source code:
+
+* fnintern.cpp - Add several internal functions. These are functions
+  which are called from POV-Ray scripts by mean of the internal(n)
+  construct, where n is an integer identifier. The patch adds
+  identifiers from 80 to 99 fo functions such as
+  
+  DBL f_output_red(DBL *ptr, unsigned int fn); // 80
+  ...
+  DBL f_pp_alpha(DBL *ptr, unsigned int fn); // 99
+
+  It also adds these functions to a trap table (POVFPU_TrapTable)
+  which I'm not sure what it does.
+
+  These functions are bound to symbolic names in pprocess.inc (which
+  is a POV-Ray include file). For example PP_Init_Depth is defined as
+  the macro
+
+  #macro PP_Init_Depth_Output()
+    #ifndef(f_output_depth)
+      #declare f_output_depth=function{internal(93)};
+    #end
+  #end
+  
+  Invoking this macro has evidently a double purpose
+
+  - to define the f_output_depth symbols to be internal(93)
+  - to start caching the depths during rendering.
+
+  All the internal functions are of the type UV (they have two
+  arguments from 0-1 indicating the normalized pixel coordinates) and
+  reduce to the following generic one:
+
+  inline DBL f_output_data(DBL *ptr, int component)
+  {
+    return Read_Output(PARAM_X, PARAM_Y, component);
+  }
+  
+  Read_Output() (postproc.h) simply extracts the desired element from
+  the appropriate cache file.
+
+
+* fpmetric.cpp - A simple modifications to move the declaration of
+  Evaluate_Function_UV to postproc.h.
+
+* parse.cpp - This is where the main post process directives (which
+  evidently do not qualify as functions) are parsed. The main parsing
+  loop is modified to add:
+
+        CASE (POST_PROCESS_TOKEN)
+          parseUnofficialFeature(110);
+          Parse_Post_Process();
+        END_CASE
+
+  This should capture the post_process {} block in the global_settings
+  {} block of the POV script. These blocks look like 
+
+  global_settings {
+    post_process {
+      function { ... } // calculation of red component
+      function { ... } // calculation of green component
+      function { ... } // calculation of blue component
+      function { ... } // calculation of transparency component
+      [ save_file FILENAME ]
+    }
+  }
+
+  According parse.cpp defines the function Parse_Post_Process() which
+  deals with the actual parsing of these blocks.
+  blocks. Parse_Post_Proces() chains an instance of the Post_Process
+  structure for each post_process {} block. For each of them it
+  processes the four function {...} blocks and the optional save_file
+  statement. It saves the results (four pointers to parsed functions
+  plus the filename and other stuff) back to the Post_Process
+  structure and exits.
+
+* pigment.cpp - A minor modifcation, but I'm not sure about its
+  meaning.
+
+* povmsend.cpp - Related to processing statistics?
+
+* rendctrl.cpp - The function FrameRender() is heavily patched to
+  maintain the necessary bookkeeping informations. FrameRender()
+  starts with
+
+     DBL Post_Process_Info[PP_LAST_INFO];
+
+  which is an array of doubles, one for each info (e.g. depth, x,y,z
+  and so on) for the currently processed pixel. Then:
+  
+  - intializes tpostproc_frame, tparse_frame tphoton_frame etc. 0.0
+  - calls Initialize_Post_Processing() (postproc.cpp)
+  
+  + Enter Stage = STAGE_INIT:
+  
+    - open_output_file( Actual_Output_Name ) which has the following
+      justification:
+
+       // Open output file and if we are continuing an interrupted trace,
+       // read in the previous file settings and any data there.  This has to
+       // be done before any image-size related allocations, since the settings
+       // in a resumed file take precedence over that specified by the user. [AED]
+
+  + Enter Stage = STAGE_RENDER:
+
+    - Start_Adaptive_Tracing / Start_Non_Adaptive_Tracing
+  
+  + Enter Postprocess. This is where the post-processing happens:
+  
+    - Send_Progress("Postprocessing", PROGRESS_POST_PROCESS)
+
+    - Reinitialize_Post_Processing(): closes open caches and re-open
+      for reading.
+
+    - Post_Process_Loop(pass, cursor): Loops over post-processing
+      blocks (which are extracted during parsing). pass is incremented
+      at each block, which is pointed by cursor. The function does the
+      actual processing and saves the result to the image buffer.
+    
+  + Enter Shutdown:
+  
+    - Deinitialize_Post_Processing()
+
+* renderio.cpp - patches open_output_file() so that an arbitray
+  filename can be given rathern than using the global variable
+  Actual_Output_Name.
+  
+* tokenize.cpp - adds to the token list {POST_PROCESS_TOKEN,
+  "post_process"}
+
+* vbuffer.h and vbuffer.cpp - Modifies Trace_Primary_Ray() and
+  Trace_Primary_Ray_With_Blur() to store informations about the traced
+  pixel back to a Post_Process_Info strutcture (an array of doubles).
+
+  The actual bookkeeping is performed by Post_Process_Intersection_Info()
+  (postprocess.cpp):
+
+  if(Intersection_Found)
+    if(Post_Process_Info)
+      Post_Process_Intersection_Info(Post_Process_Info, &Best_Intersection);
+
+---------------------------------------------------------------------------
+                                                         MEGAPOV-1.2.1 BUGS
+---------------------------------------------------------------------------
+
+* Bogus AVOID_EMPTY_STRING_WARNINGS_PATCH
+
+  Problem: The patch assumes the follwing code is valid
+
+  #include<stdio.h>
+  int
+  main(int argc, char** argv)
+  {       
+    char *s=NULL ;
+    fprintf(stderr,"%s",s) ;
+    return 0 ;
+  }
+  
+  however this code crashes with some version of LIBC. This bogus code
+  is triggered on some platforms if no X11 display is found and crashes
+  the application.
+
+  Temporary solution: Disalbe AVOID_EMPTY_STRING_WARNINGS_PATCH in
+  patches.h.
+
+
+

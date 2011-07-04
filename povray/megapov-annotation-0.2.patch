@@ -1,0 +1,275 @@
+diff -urN -x '*libraries*' -x '*~' -x config.h -x conf.h megapov-1.2.1/source/patches/patches.h megapov-1.2.1-patched/source/patches/patches.h
+--- megapov-1.2.1/source/patches/patches.h	2005-08-23 12:20:33.000000000 -0700
++++ megapov-1.2.1-patched/source/patches/patches.h	2006-09-30 15:05:47.000000000 -0700
+@@ -57,12 +57,13 @@
+   #define PATCHES_BY_MAEL
+   #define PATCHES_BY_THOMAS_WILLHALM
+   #define PATCHES_BY_LUTZ_PETER_HOOGE
++  #define PATCHES_BY_ANDREA_VEDALDI
+ 
+   #ifdef PATCHES_BY_ABX
+   // patches to avoid some warnings with gcc (under djgpp), bcc and dmc
+     #define AVOID_TYPE_CONVERSION_WARNINGS_PATCH
+     #define AVOID_MIGHT_BE_USED_UNINITIALIZED_WARNINGS_PATCH
+-    #define AVOID_EMPTY_STRING_WARNING
++//    #define AVOID_EMPTY_STRING_WARNING
+     #define REMOVE_NOT_USED_CODE_WARNINGS_PATCH
+     #define AVOID_ALWAYS_FALSE_COMPARISON_WARNINGS_PATCH
+     #define WHITE_SPACE_BEFORE_SEMICOLON_PATCH
+@@ -212,5 +213,9 @@
+     #define BICUBIC_INTERPOLATION_PATCH
+   #endif  //PATCHES_BY_LUTZ_PETER_HOOGE
+ 
++  #ifdef PATCHES_BY_ANDREA_VEDALDI
++   #define ANNOTATION_PATCH
++  #endif
++
+ #endif  //MASTER_SWITCH
+ #endif	//#ifndef PATCHES_H
+diff -urN -x '*libraries*' -x '*~' -x config.h -x conf.h megapov-1.2.1/source/patches/postproc.cpp megapov-1.2.1-patched/source/patches/postproc.cpp
+--- megapov-1.2.1/source/patches/postproc.cpp	2005-08-23 12:20:33.000000000 -0700
++++ megapov-1.2.1-patched/source/patches/postproc.cpp	2006-09-26 18:50:07.000000000 -0700
+@@ -51,6 +51,10 @@
+ 
+ #include "postproc.h"
+ 
++#ifdef ANNOTATION_PATCH
++#include <arpa/inet.h>
++#endif
++
+ BEGIN_POV_NAMESPACE
+ 
+ /*****************************************************************************
+@@ -103,7 +107,55 @@
+ static IOBase * PP_Files[PP_LAST_INFO];
+ static char * pp_names[PP_LAST_INFO];
+ 
++#ifdef ANNOTATION_PATCH
++//static int pp_bigendian ;
++
++/*****************************************************************************
++*
++* FUNCTION
++*
++*   Convert_Double_Host_To_Network
++*   Convert_Double_Network_To_Host
++*
++* DESCRIPTION
++*
++*   Convert DBL values from host to network byte ordering and back.
++*
++******************************************************************************/
++
++inline DBL Convert_Double_Host_To_Network(DBL x)
++{
++  typedef union { DBL x ; uint32_t y[2] ; } swap64_t ;
++  swap64_t* pt = reinterpret_cast<swap64_t*>( &x ) ;
+ 
++#if (BYTE_ORDER == LITTLE_ENDIAN)
++#warning "ANNOTATION PATCH: LITTLE ENDIAN TARGET"
++  uint32_t w0 = htonl(pt -> y[0]) ;
++  uint32_t w1 = htonl(pt -> y[1]) ;
++  pt -> y[0] = w1 ;
++  pt -> y[1] = w0 ;
++#endif
++
++  return pt -> x ;
++}
++
++inline DBL Convert_Double_Network_To_Host(DBL x)
++{
++  typedef union { DBL x ; uint32_t y[2] ; } swap64_t ;
++  swap64_t* pt = reinterpret_cast<swap64_t*>( &x ) ;
++
++#if (BYTE_ORDER == LITTLE_ENDIAN)
++#warning "ANNOTATION PATCH: LITTLE ENDIAN TARGET"
++  uint32_t w0 = ntohl(pt -> y[0]) ;
++  uint32_t w1 = ntohl(pt -> y[1]) ;
++  pt -> y[0] = w1 ;
++  pt -> y[1] = w0 ;
++#endif
++
++  return pt -> x ;
++}
++
++#endif
+ 
+ /*****************************************************************************
+ *
+@@ -357,6 +409,32 @@
+         PP_Files[i]=NULL;
+         if( pp_names[i] )
+         {
++#ifdef ANNOTATION_PATCH
++	  // if(i == PP_IPOINT_Z) {
++          if(i == PP_DEPTH) {
++            char* pt ;
++            char file_name [1024] ;
++            strcpy( file_name, pp_names[i] ) ;
++
++            /* remove '.ppd' */                     
++            pt = strrchr(file_name, '.') ;
++            if (pt != NULL) *pt = '\0' ;
++
++            /* remove component extension */                     
++            pt = strrchr(file_name, '.') ;
++            if (pt != NULL) *pt = '\0' ;
++
++            /* remove image extension */                     
++            pt = strrchr(file_name, '.') ;
++            if (pt != NULL) *pt = '\0' ;
++
++            /* add '.depth' */
++            strcat( file_name, ".depth" ) ;
++
++            /* rename Z pos. file */
++            RENAME_FILE( pp_names[i], file_name ) ;
++          } else
++#endif
+        	  DELETE_FILE( pp_names[i] );
+           POV_FREE( pp_names[i] );
+         }
+@@ -386,9 +464,18 @@
+ void Save_Post_Process_Info(DBL *PP_Info)
+ {
+   if(PP_Info)
++#ifdef ANNOTATION_PATCH
++    for (int i=0; i<PP_LAST_INFO; i++) {
++      if( PP_Files[ i ] != NULL ) {
++        DBL x = Convert_Double_Host_To_Network( PP_Info[ i ] ) ;
++        PP_Files[ i ]->write( &x , sizeof(x) );
++      }
++    }
++#else
+     for (int i=0; i<PP_LAST_INFO; i++)
+       if( PP_Files[ i ] != NULL )
+         PP_Files[ i ]->write( & ( PP_Info[ i ] ) , sizeof( PP_Info[ i ] ) );
++#endif
+ }
+ 
+ /*****************************************************************************
+@@ -421,7 +508,12 @@
+   pos *= sizeof( Value );
+   PP_Files[Component]->seekg(pos,SEEK_SET);
+   PP_Files[Component]->read( (char *) &Value , sizeof( Value ) );
++
++#ifdef ANNOTATION_PATCH
++  return Convert_Double_Network_To_Host(Value) ;
++#else
+   return Value;
++#endif
+ }
+ 
+ /*****************************************************************************
+diff -urN -x '*libraries*' -x '*~' -x config.h -x conf.h megapov-1.2.1/source/renderio.cpp megapov-1.2.1-patched/source/renderio.cpp
+--- megapov-1.2.1/source/renderio.cpp	2005-08-23 12:20:33.000000000 -0700
++++ megapov-1.2.1-patched/source/renderio.cpp	2006-09-30 15:17:19.000000000 -0700
+@@ -546,6 +546,108 @@
+        #endif
+     }
+   }
++
++  #ifdef ANNOTATION_PATCH
++  {
++    char file_name [256] ;
++    char const * annotation_target =
++#ifdef POST_PROCESS_PATCH
++      target ;
++#else
++    Actual_Output_Name ;
++#endif 
++    CAMERA* cam = Frame.Camera ;
++
++    /* Translate Camera->Type into a symbolic name */
++#define CT_CASE(A,B) \
++    case A ## _CAMERA : cam_type_name = # B ; break ;
++
++    char * cam_type_name = "unknown" ;
++    switch(cam -> Type) {
++      CT_CASE(PERSPECTIVE,      perspective   ) ;      
++      CT_CASE(ORTHOGRAPHIC,     orthographic  ) ;
++      CT_CASE(FISHEYE,          fisheye       ) ;
++      CT_CASE(ULTRA_WIDE_ANGLE, ultrawideangle) ;
++      CT_CASE(PANORAMIC,        panoramic     ) ; 
++      CT_CASE(CYL_1,            yl1           ) ;
++      CT_CASE(CYL_2,            cyl2          ) ;
++      CT_CASE(CYL_3,            cyl3          ) ;
++      CT_CASE(CYL_4,            cyl4          ) ;
++      CT_CASE(SPHERICAL,        spherical     ) ;
++#ifdef USER_DEFINED_CAMERA_PATCH
++      CT_CASE(USER_DEFINED,     userdefined   ) ;
++#endif
++    }
++    
++    /* Determine output filename for annotations */
++    {
++      strcpy(file_name, annotation_target) ;
++  
++      /* remove extension */
++      char* pt = strrchr(file_name, '.') ;
++      if (pt != NULL) *pt = '\0' ;
++
++      /* add back our extension */
++      strcat(file_name, ".txt") ;
++    }
++    
++    /* Open output file and write annotation */
++    IOBase * file = New_OStream(file_name, POV_File_Text_Stream, false) ;
++    if(file == NULL) {
++      Error("Cannot save annotations to %s", file_name );
++    } else {
++          
++      char buffer [1024] ;
++      buffer[1024-1] = 0 ;
++
++      snprintf(buffer, 1024,
++               "output_name   = '%s' ;\n"
++               "screen_height = %d ;\n"
++               "screen_width  = %d ;\n"
++               "cam_type      = '%s' ;\n"
++               "cam_pos       = [%10.7g %10.7g %10.7g]' ;\n"
++               "cam_dir       = [%10.7g %10.7g %10.7g]' ;\n"
++               "cam_up        = [%10.7g %10.7g %10.7g]' ;\n"
++               "cam_right     = [%10.7g %10.7g %10.7g]' ;\n"
++               "cam_sky       = [%10.7g %10.7g %10.7g]' ;\n"
++               "cam_lookat    = [%10.7g %10.7g %10.7g]' ;\n"
++               "cam_fpoint    = [%10.7g %10.7g %10.7g]' ;\n"
++               "cam_focal     = %7g ;\n"
++               "cam_angle     = %7g ;\n",
++               Actual_Output_Name,
++               Frame.Screen_Height,
++               Frame.Screen_Width,
++               cam_type_name,
++               cam->Location[X], 
++               cam->Location[Y], 
++               cam->Location[Z],
++               cam->Direction[X], 
++               cam->Direction[Y], 
++               cam->Direction[Z],
++               cam->Up[X], 
++               cam->Up[Y], 
++               cam->Up[Z],
++               cam->Right[X], 
++               cam->Right[Y], 
++               cam->Right[Z],
++               cam->Sky[X], 
++               cam->Sky[Y], 
++               cam->Sky[Z],
++               cam->Look_At[X],
++               cam->Look_At[Y],
++               cam->Look_At[Z],
++               cam->Focal_Point[X],
++               cam->Focal_Point[Y],
++               cam->Focal_Point[Z],
++               cam->Focal_Distance,
++               cam->Angle) ;
++
++      file -> write( buffer, strlen(buffer) ) ;
++      delete file ;
++    }
++  }
++  // ANNOTATION_PATCH
++  #endif
+ }
+ 
+ 
