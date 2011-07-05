@@ -1,0 +1,15 @@
+--- patio/meshlath.inc.orig	2011-07-05 15:40:33.000000000 +0200
++++ patio/meshlath.inc	2011-07-05 15:41:48.000000000 +0200
+@@ -30,10 +30,10 @@
+ #declare a_cr[3][3]=0;
+ 
+ // horner's rule
+-#macro Horner(T,row,point)
++#macro Horner(T,row,Point)
+ 
+  #local result=
+-  (T* (T* (T*a_cr[0][row]+a_cr[1][row]) +a_cr[2][row]) +a_cr[3][row]) *point;
++  (T* (T* (T*a_cr[0][row]+a_cr[1][row]) +a_cr[2][row]) +a_cr[3][row]) *Point;
+ 
+  (result)
+ 
