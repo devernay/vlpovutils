@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1E1355CB13C31CCD00431737 /* occlusionmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E1355CA13C31CCD00431737 /* occlusionmap.cpp */; };
 		1E16570E13BE1D1A00206759 /* vec2camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E16570D13BE1D1A00206759 /* vec2camera.cpp */; };
 		1E9D958913BDB65C009E873D /* motionfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D958813BDB65C009E873D /* motionfield.cpp */; };
 		1E9D95C713BDC9C1009E873D /* vlpov_motionfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D95C613BDC9C1009E873D /* vlpov_motionfield.cpp */; };
@@ -57,6 +58,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E13557313C2339900431737 /* ppcontent.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; name = ppcontent.inc; path = data/ppcontent.inc; sourceTree = "<group>"; };
+		1E13557413C2339900431737 /* test_anim.pov */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test_anim.pov; path = data/test_anim.pov; sourceTree = "<group>"; };
+		1E13557513C2339900431737 /* test_nonortho.pov */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test_nonortho.pov; path = data/test_nonortho.pov; sourceTree = "<group>"; };
+		1E13557613C2339900431737 /* test_stereo.pov */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test_stereo.pov; path = data/test_stereo.pov; sourceTree = "<group>"; };
+		1E13557713C2339900431737 /* test.pov */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test.pov; path = data/test.pov; sourceTree = "<group>"; };
+		1E1355CA13C31CCD00431737 /* occlusionmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = occlusionmap.cpp; sourceTree = "<group>"; };
 		1E16570D13BE1D1A00206759 /* vec2camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vec2camera.cpp; sourceTree = "<group>"; };
 		1E9D958813BDB65C009E873D /* motionfield.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = motionfield.cpp; sourceTree = "<group>"; };
 		1E9D95C213BDC98F009E873D /* vlpov_motionfield */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = vlpov_motionfield; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +98,7 @@
 		08FB7794FE84155DC02AAC07 /* vlpovutils */ = {
 			isa = PBXGroup;
 			children = (
+				1E1355C613C3100100431737 /* POV-Ray data */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				C6A0FF2B0290797F04C91782 /* Documentation */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
@@ -108,6 +116,7 @@
 				1EE3B71213BCA6BC00CEE4D8 /* vlpov.hpp */,
 				1E9D958813BDB65C009E873D /* motionfield.cpp */,
 				1E9D95C613BDC9C1009E873D /* vlpov_motionfield.cpp */,
+				1E1355CA13C31CCD00431737 /* occlusionmap.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -119,6 +128,18 @@
 				1E9D95C213BDC98F009E873D /* vlpov_motionfield */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1E1355C613C3100100431737 /* POV-Ray data */ = {
+			isa = PBXGroup;
+			children = (
+				1E13557313C2339900431737 /* ppcontent.inc */,
+				1E13557413C2339900431737 /* test_anim.pov */,
+				1E13557513C2339900431737 /* test_nonortho.pov */,
+				1E13557613C2339900431737 /* test_stereo.pov */,
+				1E13557713C2339900431737 /* test.pov */,
+			);
+			name = "POV-Ray data";
 			sourceTree = "<group>";
 		};
 		C6A0FF2B0290797F04C91782 /* Documentation */ = {
@@ -221,6 +242,7 @@
 				1EE3B72D13BCB4DB00CEE4D8 /* look2motion.cpp in Sources */,
 				1E9D958913BDB65C009E873D /* motionfield.cpp in Sources */,
 				1E16570E13BE1D1A00206759 /* vec2camera.cpp in Sources */,
+				1E1355CB13C31CCD00431737 /* occlusionmap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

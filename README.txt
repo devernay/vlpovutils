@@ -1,4 +1,4 @@
-This library allow the correct extraction of the camera parameters from POV-Ray images
+This library allows the correct extraction of the camera parameters from POV-Ray images
 generated using the VLPov patch:
 - VLPov, a set of utilities to use the POV-Ray raytracer in order to generate and analyze
   Computer Vision datasets. http://www.vlfeat.org/~vedaldi/code/vlpovy.html

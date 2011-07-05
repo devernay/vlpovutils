@@ -76,13 +76,15 @@ int main(int argc, char *argv[])
     const char *frame2 = argv[2];
     const char *frame2_basename = mybasename(frame2);
 
+#ifdef VLPOV_OLD
+#warning "compiling in comparison with old vlpovutils"
     {
         VLPovImage<double> z1;
-        VLPovCamera cam1;
-        VLPovCamera cam2;
+        VLPovCameraOld cam1;
+        VLPovCameraOld cam2;
         int retval;
     
-        retval = vlpov_povread(frame1, z1, cam1);
+        retval = vlpov_povread_old(frame1, z1, cam1);
         if(retval != 0) {
             fprintf(stderr,"Error %d while reading %s.{png,depth,txt}\n", retval, frame1);
             exit(1);
@@ -91,18 +93,18 @@ int main(int argc, char *argv[])
         vector3 t1;
         cam1.intrinsicMatrix(K1);
         //cam1.extrinsicParameters(R1, t1);
-        cout << "Intrinsic matrix 1: " << endl << K1 << endl;
-        cout << "Extrinsic 1: " << endl << cam1.R << endl << cam1.T << endl;
+        cout << "Intrinsic matrix 1 (old): " << endl << K1 << endl;
+        cout << "Extrinsic 1 (old): " << endl << cam1.R << endl << cam1.T << endl;
         z1.save((std::string(frame1)+".zold").c_str());
                 
-        retval = vlpov_povread(frame2, cam2);
+        retval = vlpov_povread_old(frame2, cam2);
         if(retval != 0) {
             fprintf(stderr,"Error %d while reading %s.txt\n", retval, frame2);
             exit(1);
         }
         
         VLPovImage<double> m1x, m1y;
-        vlpov_motionfield(cam1, z1, cam2, m1x, m1y);
+        vlpov_motionfield_old(cam1, z1, cam2, m1x, m1y);
         std::string m1x_name = std::string(frame1)+"."+std::string(frame2_basename)+".mxold";
         std::string m1y_name = std::string(frame1)+"."+std::string(frame2_basename)+".myold";
         retval = m1x.save(m1x_name.c_str());
@@ -117,14 +119,15 @@ int main(int argc, char *argv[])
             exit(1);
         }
     }
-  
+#endif // VLPOV_OLD
+    
     {
         VLPovImage<double> z1;
-        VLPovCamera2 cam1;
-        VLPovCamera2 cam2;
+        VLPovCamera cam1;
+        VLPovCamera cam2;
         int retval;
         
-        retval = vlpov_povread2(frame1, z1, cam1);
+        retval = vlpov_povread(frame1, z1, cam1);
         if(retval != 0) {
             fprintf(stderr,"Error %d while reading %s.{png,depth,txt}\n", retval, frame1);
             exit(1);
@@ -134,16 +137,16 @@ int main(int argc, char *argv[])
         cout << "Extrinsic 1(new): " << endl << cam1.R << endl << cam1.t << endl;
         z1.save((std::string(frame1)+".znew").c_str());
         
-        retval = vlpov_povread2(frame2, cam2);
+        retval = vlpov_povread(frame2, cam2);
         if(retval != 0) {
             fprintf(stderr,"Error %d while reading %s.txt\n", retval, frame2);
             exit(1);
         }
         
         VLPovImage<double> m1x, m1y;
-        vlpov_motionfield2(cam1, z1, cam2, m1x, m1y);
-        std::string m1x_name = std::string(frame1)+"."+std::string(frame2_basename)+".mxnew";
-        std::string m1y_name = std::string(frame1)+"."+std::string(frame2_basename)+".mynew";
+        vlpov_motionfield(cam1, z1, cam2, m1x, m1y);
+        std::string m1x_name = std::string(frame1)+"."+std::string(frame2_basename)+".mx";
+        std::string m1y_name = std::string(frame1)+"."+std::string(frame2_basename)+".my";
         retval = m1x.save(m1x_name.c_str());
         if(retval != 0) {
             fprintf(stderr,"Error %d while saving %s\n", retval, m1x_name.c_str());
