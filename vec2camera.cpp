@@ -57,9 +57,9 @@ void vlpov_vec2camera(int width,
                                       0, 0, 1);
     matrix33 BA = prod(B,A);
     rqdecomp33(BA,K,R);
-#ifdef DEBUG
-    cout << "BA=" << endl << BA << endl << "KR=" << endl <<  prod(K,R) << endl;
-#endif
+#   ifdef DEBUG
+    //cout << "BA=" << endl << BA << endl << "KR=" << endl <<  prod(K,R) << endl;
+#   endif
     K /= K(2,2); // normalize K
     noalias(T) = -prod(R,pos);
 }

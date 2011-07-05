@@ -14,6 +14,7 @@
 			);
 			dependencies = (
 				1E9D95ED13BDCD5F009E873D /* PBXTargetDependency */,
+				1E13561613C3386000431737 /* PBXTargetDependency */,
 				1E9D95EF13BDCD62009E873D /* PBXTargetDependency */,
 			);
 			name = all;
@@ -23,6 +24,8 @@
 
 /* Begin PBXBuildFile section */
 		1E1355CB13C31CCD00431737 /* occlusionmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E1355CA13C31CCD00431737 /* occlusionmap.cpp */; };
+		1E13560513C32FD200431737 /* vlpov_motionfield2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E13560413C32FD200431737 /* vlpov_motionfield2.cpp */; };
+		1E13562A13C338CC00431737 /* libvlpov.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libvlpov.a */; };
 		1E16570E13BE1D1A00206759 /* vec2camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E16570D13BE1D1A00206759 /* vec2camera.cpp */; };
 		1E9D958913BDB65C009E873D /* motionfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D958813BDB65C009E873D /* motionfield.cpp */; };
 		1E9D95C713BDC9C1009E873D /* vlpov_motionfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D95C613BDC9C1009E873D /* vlpov_motionfield.cpp */; };
@@ -34,6 +37,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1E13561513C3386000431737 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1E1355FF13C32FAD00431737 /* vlpov_motionfield2 */;
+			remoteInfo = vlpov_motionfield2;
+		};
+		1E13562813C338C800431737 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* vlpov */;
+			remoteInfo = vlpov;
+		};
 		1E9D95E313BDCD39009E873D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
@@ -64,6 +81,8 @@
 		1E13557613C2339900431737 /* test_stereo.pov */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test_stereo.pov; path = data/test_stereo.pov; sourceTree = "<group>"; };
 		1E13557713C2339900431737 /* test.pov */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test.pov; path = data/test.pov; sourceTree = "<group>"; };
 		1E1355CA13C31CCD00431737 /* occlusionmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = occlusionmap.cpp; sourceTree = "<group>"; };
+		1E13560013C32FAD00431737 /* vlpov_motionfield2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = vlpov_motionfield2; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E13560413C32FD200431737 /* vlpov_motionfield2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vlpov_motionfield2.cpp; sourceTree = "<group>"; };
 		1E16570D13BE1D1A00206759 /* vec2camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vec2camera.cpp; sourceTree = "<group>"; };
 		1E9D958813BDB65C009E873D /* motionfield.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = motionfield.cpp; sourceTree = "<group>"; };
 		1E9D95C213BDC98F009E873D /* vlpov_motionfield */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = vlpov_motionfield; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +96,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1E1355FE13C32FAD00431737 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E13562A13C338CC00431737 /* libvlpov.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1E9D95C013BDC98F009E873D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -117,6 +144,7 @@
 				1E9D958813BDB65C009E873D /* motionfield.cpp */,
 				1E9D95C613BDC9C1009E873D /* vlpov_motionfield.cpp */,
 				1E1355CA13C31CCD00431737 /* occlusionmap.cpp */,
+				1E13560413C32FD200431737 /* vlpov_motionfield2.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -126,6 +154,7 @@
 			children = (
 				D2AAC046055464E500DB518D /* libvlpov.a */,
 				1E9D95C213BDC98F009E873D /* vlpov_motionfield */,
+				1E13560013C32FAD00431737 /* vlpov_motionfield2 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -164,6 +193,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		1E1355FF13C32FAD00431737 /* vlpov_motionfield2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1E13560613C32FD200431737 /* Build configuration list for PBXNativeTarget "vlpov_motionfield2" */;
+			buildPhases = (
+				1E1355FD13C32FAD00431737 /* Sources */,
+				1E1355FE13C32FAD00431737 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1E13562913C338C800431737 /* PBXTargetDependency */,
+			);
+			name = vlpov_motionfield2;
+			productName = vlpov_motionfield2;
+			productReference = 1E13560013C32FAD00431737 /* vlpov_motionfield2 */;
+			productType = "com.apple.product-type.tool";
+		};
 		1E9D95C113BDC98F009E873D /* vlpov_motionfield */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1E9D95C813BDC9C1009E873D /* Build configuration list for PBXNativeTarget "vlpov_motionfield" */;
@@ -219,12 +265,21 @@
 			targets = (
 				D2AAC045055464E500DB518D /* vlpov */,
 				1E9D95C113BDC98F009E873D /* vlpov_motionfield */,
+				1E1355FF13C32FAD00431737 /* vlpov_motionfield2 */,
 				1E9D95E913BDCD5B009E873D /* all */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1E1355FD13C32FAD00431737 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E13560513C32FD200431737 /* vlpov_motionfield2.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1E9D95BF13BDC98F009E873D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -249,6 +304,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1E13561613C3386000431737 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1E1355FF13C32FAD00431737 /* vlpov_motionfield2 */;
+			targetProxy = 1E13561513C3386000431737 /* PBXContainerItemProxy */;
+		};
+		1E13562913C338C800431737 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2AAC045055464E500DB518D /* vlpov */;
+			targetProxy = 1E13562813C338C800431737 /* PBXContainerItemProxy */;
+		};
 		1E9D95E413BDCD39009E873D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D2AAC045055464E500DB518D /* vlpov */;
@@ -315,6 +380,24 @@
 			};
 			name = Release;
 		};
+		1E13560213C32FAE00431737 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PRODUCT_NAME = vlpov_motionfield2;
+			};
+			name = Debug;
+		};
+		1E13560313C32FAE00431737 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PRODUCT_NAME = vlpov_motionfield2;
+			};
+			name = Release;
+		};
 		1E9D95C413BDC98F009E873D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -371,6 +454,15 @@
 			buildConfigurations = (
 				1DEB91F008733DB70010E9CD /* Debug */,
 				1DEB91F108733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1E13560613C32FD200431737 /* Build configuration list for PBXNativeTarget "vlpov_motionfield2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1E13560213C32FAE00431737 /* Debug */,
+				1E13560313C32FAE00431737 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
