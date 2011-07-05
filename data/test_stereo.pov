@@ -13,8 +13,8 @@ global_settings {
 #declare l=clock / 10 ;
 
 camera{
-  location <0.0, 0.5, 0.0>
-  direction 0.8*z+l*0.5*x  
+  location <l*2.0, 0.5, 0.0>
+  direction 0.8*z-l*0.5*x  
   right     x*image_width/image_height
   up        y
   // look_at   <0.0, 0.5, 4.0>
