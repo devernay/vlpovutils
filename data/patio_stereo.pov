@@ -22,7 +22,13 @@ PP_Init_Depth_Output()
 #declare half_interocular=4;
 
 #declare openbook_pos=<20,45.5,245>;
+// fountain is at (926,874) Z=584 d=16.96
 #declare fountain_pos=<0,-6,0>;
+// tree_backleft is at (661,769) Z=927 d=24.56
+#declare tree_backleft_pos=<-270,-20, 270>;
+#declare tree_backright_pos=< 270,-10, 270>;
+#declare tree_frontleft_pos=<-270,-10,-270>;
+#declare tree_frontright_pos=< 270,-10,-270>;
 
 camera{
   location cam_pos+half_interocular*dir_right*(clock*2-1)
@@ -31,13 +37,14 @@ camera{
   right     cam_right
   // look_at   <0.0, 0.5, 4.0>
   //angle 77
-  focal_point (1-clock)*fountain_pos + clock*fountain_pos
-  //aperture 0.4     // a nice compromise
+  // focal_point fountain_pos
+  // focal_point tree_backleft_pos
+  ////aperture 0.4     // a nice compromise
   ////  aperture 0.05    // almost everything is in focus
-  aperture 10     // much blurring
+  //aperture 10     // much blurring
   ////  blur_samples 4       // fewer samples, faster to render
   ////  blur_samples 20      // more samples, higher quality image
   ////  blur_samples 200      // many samples, high quality image
-  blur_samples 100
-  variance 0.0001 // see pov-ray soc on focal blur
+  //blur_samples 100
+  //variance 0.0001 // see pov-ray soc on focal blur
 }

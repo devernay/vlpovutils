@@ -269,17 +269,17 @@ int main(int argc, char *argv[])
         
         retval = vlpov_povread(frame1, z1, cam1);
         if(retval != 0) {
-            fprintf(stderr,"Error %d while reading %s.{png,depth,txt}\n", retval, frame1);
+            fprintf(stderr,"Error %d while reading %s.{depth,txt}\n", retval, frame1);
             exit(1);
         }
         
-        cout << "Intrinsic matrix 1(new): " << endl << cam1.K << endl;
-        cout << "Extrinsic 1(new): " << endl << cam1.R << endl << cam1.t << endl;
-        z1.save((std::string(frame1)+".znew").c_str());
+        //cout << "Intrinsic matrix 1(new): " << endl << cam1.K << endl;
+        //cout << "Extrinsic 1(new): " << endl << cam1.R << endl << cam1.t << endl;
+        //z1.save((std::string(frame1)+".znew").c_str());
         
         retval = vlpov_povread(frame2, z2, cam2);
         if(retval != 0) {
-            fprintf(stderr,"Error %d while reading %s.{png,depth,txt}\n", retval, frame2);
+            fprintf(stderr,"Error %d while reading %s.{depth,txt}\n", retval, frame2);
             exit(1);
         }
         
