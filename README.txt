@@ -15,6 +15,11 @@ POV-Ray camera don't form an orthonormal set. This allows for cameras with:
 In order to render these images, the Vista buffer feature of POV-Ray must be disabled
 (option -UV in megapov).
 
+Please check out the following documentation on how to create
+stereoscopic pairs with POV-Ray:
+- "Creating stereoscopic left-right image pairs with POVRay" http://www.triplespark.net/render/stereo/create.html
+- "Paul Bourke on PovRay" http://paulbourke.net/exhibition/vpac/povray.html
+
 Here is how to generate some individual frames from the sample scenes:
 
 mkdir results; cd results
