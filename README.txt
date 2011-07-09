@@ -36,6 +36,8 @@ You can get more POV-Ray scenes from:
 
 ** patio
 
+* getting it
+
 http://www.ignorancia.org/en/index.php?page=Patio
 
 requires:
@@ -46,10 +48,37 @@ apply patch patio.patch found in the data dir:
 
 (cd ../data; patch -p0 -d. < patio.patch)
 
-megapov +Q9 -UV +w960 +h540 +a0.0 +j0.0 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo.pov +Opatio_stereo1.png&
-megapov +Q9 -UV +w960 +h540 +a0.0 +j0.0 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo.pov +Opatio_stereo2.png&
+* radiosity
+
+in order to apply radiosity:
+change in patio/patio.pov the line
+#declare usar_rad=0;
+to
+#declare usar_rad=2;
+
+then, run one rendering. This will save a radiosity file "patio.rad" in the current directory.
+for subsequent renderings *from the same point of view*, change the line to
+#declare usar_rad=1;
+This will load the radiosity file and thus save computations.
+
+* rendering: keep the 4/3 aspect ratio!
+
+Note: antialiasing should be used if there is no focal blur (remove the options +A0.0 +J0.0, which mean perform 3x3 antialiasing on every pixel)
+
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo.pov +Opatio_stereo1.png
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_far.pov +Opatio_stereo1_far.png
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_near.pov +Opatio_stereo1_near.png
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_near2.pov +Opatio_stereo1_near2.png
+megapov +Q9 -UV +w1152 +h864 +A0.0 +J0.0 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo.pov +Opatio_stereo1_all.png
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo.pov +Opatio_stereo2.png
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_far.pov +Opatio_stereo2_far.png
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_near.pov +Opatio_stereo2_near.png
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_near2.pov +Opatio_stereo2_near2.png
+megapov +Q9 -UV +w1152 +h864 +A0.0 +J0.0 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo.pov +Opatio_stereo2_all.png
 wait
-../build/Release/vlpov_motionfield2 patio_stereo1 patio_stereo2
+../build/Release/vlpov_motionfield2 patio_stereo1_all patio_stereo2_all
+
+ (echo -270 -20 -270 && echo 0 -6 0) | ../../../build/Release/vlpov_project patio_stereo1_all patio_stereo2_all
 
 ** other scenes
 

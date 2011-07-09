@@ -37,14 +37,14 @@ camera{
   right     cam_right
   // look_at   <0.0, 0.5, 4.0>
   //angle 77
-  // focal_point fountain_pos
+  focal_point fountain_pos
   //focal_point tree_backleft_pos
   ////aperture 0.4     // a nice compromise
-  ////  aperture 0.05    // almost everything is in focus
+  aperture 0.001    // almost everything is in focus
   //aperture 5     // much blurring
   ////  blur_samples 4       // fewer samples, faster to render
   ////  blur_samples 20      // more samples, higher quality image
   ////  blur_samples 200      // many samples, high quality image
-  //blur_samples 100
-  //variance 0.0001 // see pov-ray soc on focal blur
+  blur_samples 100
+  variance 0.0001 // see pov-ray soc on focal blur
 }
