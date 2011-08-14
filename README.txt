@@ -68,12 +68,14 @@ Note: antialiasing should be used if there is no focal blur (remove the options 
 megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo.pov +Opatio_stereo1.png
 megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_far.pov +Opatio_stereo1_far.png
 megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_near.pov +Opatio_stereo1_near.png
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_near2.pov +Opatio_stereo1_near2.png
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_near2.pov +Opatio_stereo1_near2.png 
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_far2.pov +Opatio_stereo1_far2.png 
 megapov +Q9 -UV +w1152 +h864 +A0.0 +J0.0 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo.pov +Opatio_stereo1_all.png
 megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo.pov +Opatio_stereo2.png
 megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_far.pov +Opatio_stereo2_far.png
 megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_near.pov +Opatio_stereo2_near.png
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_near2.pov +Opatio_stereo2_near2.png
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_near2.pov +Opatio_stereo2_near2.png 
+megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_far2.pov +Opatio_stereo2_far2.png 
 megapov +Q9 -UV +w1152 +h864 +A0.0 +J0.0 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo.pov +Opatio_stereo2_all.png
 wait
 ../build/Release/vlpov_motionfield2 patio_stereo1_all patio_stereo2_all
