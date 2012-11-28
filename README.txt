@@ -1,4 +1,5 @@
-VLPovUtils 1.0
+VLPovUtils
+version 1.0 (28/11/2012)
 by Frederic Devernay <frederic.devernay@inria.fr>
 (c) INRIA 2012
 
