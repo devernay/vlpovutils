@@ -498,12 +498,14 @@
 		1E9D95EA13BDCD5B009E873D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_NAME = vlpovutils;
 			};
 			name = Debug;
 		};
 		1E9D95EB13BDCD5B009E873D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_NAME = vlpovutils;
 			};
 			name = Release;
 		};
