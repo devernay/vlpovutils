@@ -1,22 +1,42 @@
 # This is a -*- Makefile -*- for the vlpov Library
 # Warning: this file contains tabs which cannot be converted to spaces
 
+PACKAGE=vlpovutils
+VERSION=1.0
+
 # TOP_SRCDIR must be relative
 TOP_SRCDIR = ../..
 SRCDIR = .
-
-include $(TOP_SRCDIR)/config/default.mk
+-include $(TOP_SRCDIR)/config/default.mk
 -include $(TOP_SRCDIR)/config/local.mk
 -include $(TOP_SRCDIR)/config/local-$(CONFIG).mk
+
+# Please configure the following variables for your system if necessary.
+CXX			= c++
+LD			= c++
+AR 			?= ar
+RANLIB			?= ranlib
+
+CXXFLAGS		?= -O2
+LDFLAGS			?= 
+
+BOOST_PATH		?= /usr/include
+BOOST_LIBDIR		?= /usr/lib
+BOOST_CPPFLAGS		?= -I$(BOOST_PATH)/boost/tr1/tr1 -I$(BOOST_PATH)
+## use the following if boost is installed in /usr/include:
+#BOOST_CPPFLAGS		?= -DBOOST_TR1_DISABLE_INCLUDE_NEXT -I$(BOOST_PATH)/boost/tr1/tr1 -I$(BOOST_PATH)
+
+#BOOST_LDFLAGS		?= -L$(BOOST_LIBDIR)
+#BOOST_LIB_SUFFIX	?= -mt
+#BOOST_LIB_MATH_C99	?= -lboost_math_c99$(BOOST_LIB_SUFFIX)
+#LIBS = \
+#	$(BOOST_LDFLAGS) \
+#	$(BOOST_LIB_MATH_C99)
 
 
 CPPFLAGS= \
 	$(BOOST_CPPFLAGS) \
 	-I$(SRCDIR)/$(TOP_SRCDIR) -I$(SRCDIR)
-
-LIBS = \
-	$(BOOST_LDFLAGS) \
-	$(BOOST_LIB_MATH_C99)
 
 #CFLAGS_EXTRA=$(CFLAGS_OPENMP)
 CXXFLAGS=$(CFLAGS_OPT) $(CFLAGS_EXTRA)
@@ -117,5 +137,13 @@ distclean: clean
 
 count:
 	 wc -l $(SRCS_CPP) $(HEADERS)
+
+# COPYFILE_DISABLE=true and COPY_EXTENDED_ATTRIBUTES_DISABLE=true are used to disable inclusion
+# of file attributes (._* files) in the tar file on MacOSX
+dist:
+	mkdir $(PACKAGE)-$(VERSION)
+	env COPYFILE_DISABLE=true COPY_EXTENDED_ATTRIBUTES_DISABLE=true tar --exclude-from dist-exclude --exclude $(PACKAGE)-$(VERSION) -cf - . | (cd $(PACKAGE)-$(VERSION); tar xf -)
+	tar zcvf $(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)-$(VERSION)
+	rm -rf $(PACKAGE)-$(VERSION)
 
 -include $(SRCS_CPP:.cpp=.P)

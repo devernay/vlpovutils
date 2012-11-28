@@ -10,7 +10,7 @@
 #ifndef __VLPOV_HPP__
 #define __VLPOV_HPP__
 
-#include <tools/boost/numeric/ublas/small.hpp>
+#include "small.hpp"
 
 class VLPovCamera {
 public:
