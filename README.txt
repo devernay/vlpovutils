@@ -25,6 +25,17 @@ stereoscopic pairs with POV-Ray:
 - "Creating stereoscopic left-right image pairs with POVRay" http://www.triplespark.net/render/stereo/create.html
 - "Paul Bourke on PovRay" http://paulbourke.net/exhibition/vpac/povray.html
 
+** Compiling
+
+This softwate requires the ublas component from BOOST (www.boost.org), so you may need
+to install development files for boost-ublas.
+
+On Linux/Unix, check out if the settings in the Makefile correspond to your system and type "make".
+
+There is also an Xcode project for Mac OS X.
+
+If you want to compile it on MS Windows, you're on your own.
+
 *** Generating data with MegaPOV and the annotation patch (aka VLPov)
 
 Here is how to generate some individual frames from the sample scenes:
