@@ -4,9 +4,11 @@ by Frederic Devernay <frederic.devernay@inria.fr>
 (c) INRIA 2012
 
 This software allows the correct extraction of the camera parameters from POV-Ray images
-generated using the MegaPOV with the "annotation" patch from VLPov:
+generated using the MegaPOV with the "annotation" patch from VLPov by Andrea Vedaldi:
 - VLPov, a set of utilities to use the POV-Ray raytracer in order to generate and analyze
   Computer Vision datasets. http://www.vlfeat.org/~vedaldi/code/vlpovy.html
+(the annotation patch and other useful povray patches are also included with this software,
+see in the "povray" subdirectory)
 
 Using this software and a vlpov-patched POVRay, you can for example:
 - generate ground truth optical flow from camera motion with ray-traced images
