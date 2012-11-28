@@ -1,0 +1,14 @@
+the focalblur patch (to be applied after the annotation patch) fixes the distribution of rays used for focal blur.
+In povray 3.6.1 and megapov 1.2.1, the rays are uniformly distributed over a disc of size 0.5*aperture x 0.5*aperture
+in the camera image plane (in world units).
+With this patch, the rays are uniformly distributed over a disc of diameter 0.5*aperture.
+This patch is a backport from povray-3.7.0.RC6.
+I left the 0.5 - which is obviously a bug - for consistency with povray-3.7.0.RC6.
+If tehre are newer versions of povray out, check if the factor is still 0.5 in the following line from
+povray-3.7.0.RC6/source/backend/render/tracepixel.cpp at the beginning of TracePixel::JitterCameraRay():
+	r = camera.Aperture * 0.5;
+there should really be no 0.5 here (Sample_Grid already contains samples that are within a disc of radius 0.5,
+because of the 0.5 in the following line from TracePixel::FocalBlurData::FocalBlurData():
+			SequentialVector2dGeneratorPtr randgen(GetSubRandomOnDiscGenerator(0, 0.5, remain));
+
+- Frederic Devernay, INRIA, Nov. 2012

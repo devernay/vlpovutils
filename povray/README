@@ -1,0 +1,373 @@
+** MEGAPOV 1.2.1
+- download and extract POVRay generic Unix source from http://www.povray.org/download/ :
+curl -O http://www.povray.org/ftp/pub/povray/Official/Unix/povray-3.6.1.tar.bz2
+tar jxvf povray-3.6.1.tar.bz2
+cd povray-3.6.1
+patch -p1 < ../megapov-focalblur.patch
+- if necessary, i.e. if PNG 1.5 or later is installed on your system:
+patch -p0 < ../povray-3.6.1-png15.patch
+
+- compile and install
+./configure --prefix=/opt/megapov --with-x COMPILED_BY="Frederic Devernay <frederic.devernay@m4x.org>"
+ -> special note for MacOSX: you MUST use gcc-4.2 on that platform: both llvm-gcc and clang
+    generate wrong code for an unknown reason. GCC 4.2 can be found in older Xcode versions,
+    see http://devernay.free.fr/hacks/xcodelegacy/
+./configure CC=gcc-4.2 CXX=g++-4.2 --prefix=/opt/megapov --host=x86_64-apple-darwin --build=x86_64-apple-darwin LDFLAGS="-L/opt/local/lib -L/opt/X11/lib" CPPFLAGS="-I/opt/local/include -I/opt/X11/include" --with-x COMPILED_BY="Frederic Devernay <frederic.devernay@m4x.org>"
+make
+sudo make install
+
+- download and extract megapov from http://megapov.inetart.net/download.html :
+curl -O http://megapov.inetart.net/packages/unix/megapov-1.2.1.tgz
+tar zxvf megapov-1.2.1.tgz
+- apply patches:
+cd megapov-1.2.1
+patch -p1 < ../megapov-annotation-0.2.patch
+patch -p1 < ../megapov-focalblur.patch
+- if necessary, i.e. if PNG 1.5 or later is installed on your system:
+patch -p1 < ../megapov-png15.patch
+- follow the build instructions from README.annotation
+./configure --prefix=/opt/megapov --with-x COMPILED_BY="Frederic Devernay <frederic.devernay@m4x.org>"
+ -> special note for MacOSX: you MUST use gcc-4.2 on that platform: both llvm-gcc and clang
+    generate wrong code for an unknown reason. GCC 4.2 can be found in older Xcode versions,
+    see http://devernay.free.fr/hacks/xcodelegacy/
+./configure CC=gcc-4.2 CXX=g++-4.2 --prefix=/opt/megapov --host=x86_64-apple-darwin --build=x86_64-apple-darwin LDFLAGS="-L/opt/local/lib -L/opt/X11/lib" CPPFLAGS="-I/opt/local/include -I/opt/X11/include" --with-x COMPILED_BY="Frederic Devernay <frederic.devernay@m4x.org>"
+make
+sudo make install
+
+- IMPORTANT:
+edit $prefix/etc/megapov/1.2.1/povray.conf and adjust the path to the povray files at the end (in povray was not installed in /usr/local)
+
+- the following files should be installed in $prefix:
+./bin/megapov
+./etc/megapov/1.2.1/povray.conf
+./etc/megapov/1.2.1/povray.ini
+./man/man1/povray.1
+./share/doc/megapov-1.2.1/AUTHORS
+./share/doc/megapov-1.2.1/ChangeLog
+./share/doc/megapov-1.2.1/distribution-license.txt
+./share/doc/megapov-1.2.1/html/appendices.html
+./share/doc/megapov-1.2.1/html/binaries.html
+./share/doc/megapov-1.2.1/html/camera.html
+./share/doc/megapov-1.2.1/html/contribution.html
+./share/doc/megapov-1.2.1/html/effects.html
+./share/doc/megapov-1.2.1/html/enable.html
+./share/doc/megapov-1.2.1/html/expressions.html
+./share/doc/megapov-1.2.1/html/global_settings.html
+./share/doc/megapov-1.2.1/html/icons/blank.png
+./share/doc/megapov-1.2.1/html/icons/caution.gif
+./share/doc/megapov-1.2.1/html/icons/caution.png
+./share/doc/megapov-1.2.1/html/icons/caution.tif
+./share/doc/megapov-1.2.1/html/icons/draft.png
+./share/doc/megapov-1.2.1/html/icons/home.gif
+./share/doc/megapov-1.2.1/html/icons/home.png
+./share/doc/megapov-1.2.1/html/icons/important.gif
+./share/doc/megapov-1.2.1/html/icons/important.png
+./share/doc/megapov-1.2.1/html/icons/important.tif
+./share/doc/megapov-1.2.1/html/icons/next.gif
+./share/doc/megapov-1.2.1/html/icons/next.png
+./share/doc/megapov-1.2.1/html/icons/note.gif
+./share/doc/megapov-1.2.1/html/icons/note.png
+./share/doc/megapov-1.2.1/html/icons/note.tif
+./share/doc/megapov-1.2.1/html/icons/prev.gif
+./share/doc/megapov-1.2.1/html/icons/prev.png
+./share/doc/megapov-1.2.1/html/icons/tip.gif
+./share/doc/megapov-1.2.1/html/icons/tip.png
+./share/doc/megapov-1.2.1/html/icons/tip.tif
+./share/doc/megapov-1.2.1/html/icons/toc-blank.png
+./share/doc/megapov-1.2.1/html/icons/toc-minus.png
+./share/doc/megapov-1.2.1/html/icons/toc-plus.png
+./share/doc/megapov-1.2.1/html/icons/up.gif
+./share/doc/megapov-1.2.1/html/icons/up.png
+./share/doc/megapov-1.2.1/html/icons/warning.gif
+./share/doc/megapov-1.2.1/html/icons/warning.png
+./share/doc/megapov-1.2.1/html/icons/warning.tif
+./share/doc/megapov-1.2.1/html/img/coll_con.png
+./share/doc/megapov-1.2.1/html/img/coll_face.png
+./share/doc/megapov-1.2.1/html/img/coll_mass.png
+./share/doc/megapov-1.2.1/html/img/con_visc.png
+./share/doc/megapov-1.2.1/html/img/con_vk.png
+./share/doc/megapov-1.2.1/html/img/connections1.png
+./share/doc/megapov-1.2.1/html/img/env_force.png
+./share/doc/megapov-1.2.1/html/img/env_impact.png
+./share/doc/megapov-1.2.1/html/img/expo1.png
+./share/doc/megapov-1.2.1/html/img/expo2.png
+./share/doc/megapov-1.2.1/html/img/faces1.png
+./share/doc/megapov-1.2.1/html/img/formula001.png
+./share/doc/megapov-1.2.1/html/img/formula001_print.png
+./share/doc/megapov-1.2.1/html/img/formula002.png
+./share/doc/megapov-1.2.1/html/img/formula002_print.png
+./share/doc/megapov-1.2.1/html/img/formula003.png
+./share/doc/megapov-1.2.1/html/img/formula003_print.png
+./share/doc/megapov-1.2.1/html/img/formula004.png
+./share/doc/megapov-1.2.1/html/img/formula004_print.png
+./share/doc/megapov-1.2.1/html/img/formula005.png
+./share/doc/megapov-1.2.1/html/img/formula005_print.png
+./share/doc/megapov-1.2.1/html/img/formula006.png
+./share/doc/megapov-1.2.1/html/img/formula006_print.png
+./share/doc/megapov-1.2.1/html/img/hdr1.png
+./share/doc/megapov-1.2.1/html/img/hdr2.png
+./share/doc/megapov-1.2.1/html/img/hdr3.png
+./share/doc/megapov-1.2.1/html/img/macro01.png
+./share/doc/megapov-1.2.1/html/img/macro02.png
+./share/doc/megapov-1.2.1/html/img/macro03a.png
+./share/doc/megapov-1.2.1/html/img/macro03b.png
+./share/doc/megapov-1.2.1/html/img/macro03c.png
+./share/doc/megapov-1.2.1/html/img/macro03d.png
+./share/doc/megapov-1.2.1/html/img/macro03e.png
+./share/doc/megapov-1.2.1/html/img/macro03f.png
+./share/doc/megapov-1.2.1/html/img/macro04.png
+./share/doc/megapov-1.2.1/html/img/macro05a.png
+./share/doc/megapov-1.2.1/html/img/macro05b.png
+./share/doc/megapov-1.2.1/html/img/macro05c.png
+./share/doc/megapov-1.2.1/html/img/macro05d.png
+./share/doc/megapov-1.2.1/html/img/macro05e.png
+./share/doc/megapov-1.2.1/html/img/macro06.png
+./share/doc/megapov-1.2.1/html/img/macro07.png
+./share/doc/megapov-1.2.1/html/img/macro09.png
+./share/doc/megapov-1.2.1/html/img/macro10a.png
+./share/doc/megapov-1.2.1/html/img/macro10b.png
+./share/doc/megapov-1.2.1/html/img/macro10c.png
+./share/doc/megapov-1.2.1/html/img/macro10d.png
+./share/doc/megapov-1.2.1/html/img/macro10e.png
+./share/doc/megapov-1.2.1/html/img/macro11.png
+./share/doc/megapov-1.2.1/html/img/macro12.png
+./share/doc/megapov-1.2.1/html/img/masses1.png
+./share/doc/megapov-1.2.1/html/img/patch01.png
+./share/doc/megapov-1.2.1/html/img/rad_halton_1600a.png
+./share/doc/megapov-1.2.1/html/img/rad_halton_1600b.png
+./share/doc/megapov-1.2.1/html/img/rad_halton_300a.png
+./share/doc/megapov-1.2.1/html/img/rad_halton_300b.png
+./share/doc/megapov-1.2.1/html/img/rad_halton_50a.png
+./share/doc/megapov-1.2.1/html/img/rad_halton_50b.png
+./share/doc/megapov-1.2.1/html/img/rad_internal_1600a.png
+./share/doc/megapov-1.2.1/html/img/rad_internal_1600b.png
+./share/doc/megapov-1.2.1/html/img/rad_internal_300a.png
+./share/doc/megapov-1.2.1/html/img/rad_internal_300b.png
+./share/doc/megapov-1.2.1/html/img/rad_internal_50a.png
+./share/doc/megapov-1.2.1/html/img/rad_internal_50b.png
+./share/doc/megapov-1.2.1/html/img/rad_sampling.png
+./share/doc/megapov-1.2.1/html/img/rad_viz_low_count.png
+./share/doc/megapov-1.2.1/html/img/rad_viz_sampling.png
+./share/doc/megapov-1.2.1/html/img/titlepage.png
+./share/doc/megapov-1.2.1/html/img/tut_drape01.jpg
+./share/doc/megapov-1.2.1/html/img/tut_drape02.jpg
+./share/doc/megapov-1.2.1/html/img/tut_drape03.jpg
+./share/doc/megapov-1.2.1/html/img/tut_drape04.jpg
+./share/doc/megapov-1.2.1/html/img/tut_drape05.jpg
+./share/doc/megapov-1.2.1/html/img/tut_hdr_1.png
+./share/doc/megapov-1.2.1/html/img/tut_hdr_2.png
+./share/doc/megapov-1.2.1/html/img/tut_hdr_3.png
+./share/doc/megapov-1.2.1/html/img/tut_hdr_env1.png
+./share/doc/megapov-1.2.1/html/img/tut_hdr_env2.png
+./share/doc/megapov-1.2.1/html/img/tut_hdr_res1.png
+./share/doc/megapov-1.2.1/html/img/tut_hdr_res2.png
+./share/doc/megapov-1.2.1/html/img/tut_hdr_view.hdr
+./share/doc/megapov-1.2.1/html/img/tut_hdr_view1.png
+./share/doc/megapov-1.2.1/html/img/tut_hdr_view2.png
+./share/doc/megapov-1.2.1/html/img/tut_nappe01.jpg
+./share/doc/megapov-1.2.1/html/img/tut_nappe02.jpg
+./share/doc/megapov-1.2.1/html/img/tut_nappe03.jpg
+./share/doc/megapov-1.2.1/html/img/tut_nappe04.jpg
+./share/doc/megapov-1.2.1/html/img/tutorial01.png
+./share/doc/megapov-1.2.1/html/img/tutorial02.png
+./share/doc/megapov-1.2.1/html/img/tutorial03.png
+./share/doc/megapov-1.2.1/html/img/tutorial04.png
+./share/doc/megapov-1.2.1/html/img/tutorial05.png
+./share/doc/megapov-1.2.1/html/img/tutorial06.png
+./share/doc/megapov-1.2.1/html/img/tutorial07.png
+./share/doc/megapov-1.2.1/html/img/tutorial08.png
+./share/doc/megapov-1.2.1/html/img/tutorial09.png
+./share/doc/megapov-1.2.1/html/inc_pprocess.inc.html
+./share/doc/megapov-1.2.1/html/include.html
+./share/doc/megapov-1.2.1/html/index.html
+./share/doc/megapov-1.2.1/html/internals.html
+./share/doc/megapov-1.2.1/html/internals_expressions.html
+./share/doc/megapov-1.2.1/html/internals_patterns.html
+./share/doc/megapov-1.2.1/html/introduction.html
+./share/doc/megapov-1.2.1/html/mechsim.inc.html
+./share/doc/megapov-1.2.1/html/megapov.css
+./share/doc/megapov-1.2.1/html/megapov0121.html
+./share/doc/megapov-1.2.1/html/megapov_index.html
+./share/doc/megapov-1.2.1/html/mp_consts.inc.html
+./share/doc/megapov-1.2.1/html/mp_types.inc.html
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial01.pov
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial02.mpg
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial02.pov
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial03.mpg
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial03.pov
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial04.mpg
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial04.pov
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial05.mpg
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial05.pov
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial06.mpg
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial06.pov
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial07.mpg
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial07.pov
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial08.mpg
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial08.pov
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial09.mpg
+./share/doc/megapov-1.2.1/html/msim_tut/tutorial09.pov
+./share/doc/megapov-1.2.1/html/multiformat_documentation.html
+./share/doc/megapov-1.2.1/html/news.html
+./share/doc/megapov-1.2.1/html/objects.html
+./share/doc/megapov-1.2.1/html/old_megapov.html
+./share/doc/megapov-1.2.1/html/parser.html
+./share/doc/megapov-1.2.1/html/patterns.html
+./share/doc/megapov-1.2.1/html/povlegal.html
+./share/doc/megapov-1.2.1/html/references.html
+./share/doc/megapov-1.2.1/html/tone_mapping.inc.html
+./share/doc/megapov-1.2.1/html/tutorials.html
+./share/doc/megapov-1.2.1/html/tutorials_hdri.html
+./share/doc/megapov-1.2.1/html/tutorials_simulation.html
+./share/doc/megapov-1.2.1/html/where.html
+./share/doc/megapov-1.2.1/html/why.html
+./share/doc/megapov-1.2.1/NEWS
+./share/doc/megapov-1.2.1/povlegal.doc
+./share/doc/megapov-1.2.1/source-license.txt
+./share/megapov-1.2.1/icons/megapov_16.png
+./share/megapov-1.2.1/icons/megapov_32.png
+./share/megapov-1.2.1/icons/megapov_48.png
+./share/megapov-1.2.1/icons/megapov_64.png
+./share/megapov-1.2.1/include/arrays.inc
+./share/megapov-1.2.1/include/ash.map
+./share/megapov-1.2.1/include/benediti.map
+./share/megapov-1.2.1/include/bubinga.map
+./share/megapov-1.2.1/include/bumpmap_.png
+./share/megapov-1.2.1/include/cedar.map
+./share/megapov-1.2.1/include/chars.inc
+./share/megapov-1.2.1/include/colors.inc
+./share/megapov-1.2.1/include/consts.inc
+./share/megapov-1.2.1/include/crystal.ttf
+./share/megapov-1.2.1/include/cyrvetic.ttf
+./share/megapov-1.2.1/include/debug.inc
+./share/megapov-1.2.1/include/finish.inc
+./share/megapov-1.2.1/include/fract003.png
+./share/megapov-1.2.1/include/functions.inc
+./share/megapov-1.2.1/include/glass.inc
+./share/megapov-1.2.1/include/glass_old.inc
+./share/megapov-1.2.1/include/golds.inc
+./share/megapov-1.2.1/include/logo.inc
+./share/megapov-1.2.1/include/marbteal.map
+./share/megapov-1.2.1/include/math.inc
+./share/megapov-1.2.1/include/mechsim.inc
+./share/megapov-1.2.1/include/metals.inc
+./share/megapov-1.2.1/include/mp_consts.inc
+./share/megapov-1.2.1/include/mp_functions.inc
+./share/megapov-1.2.1/include/mp_types.inc
+./share/megapov-1.2.1/include/mtmand.pot
+./share/megapov-1.2.1/include/mtmandj.png
+./share/megapov-1.2.1/include/orngwood.map
+./share/megapov-1.2.1/include/pinkmarb.map
+./share/megapov-1.2.1/include/plasma2.png
+./share/megapov-1.2.1/include/plasma3.png
+./share/megapov-1.2.1/include/povlogo.ttf
+./share/megapov-1.2.1/include/povmap.png
+./share/megapov-1.2.1/include/pprocess.inc
+./share/megapov-1.2.1/include/rad_def.inc
+./share/megapov-1.2.1/include/rand.inc
+./share/megapov-1.2.1/include/rdgranit.map
+./share/megapov-1.2.1/include/screen.inc
+./share/megapov-1.2.1/include/shapes.inc
+./share/megapov-1.2.1/include/shapes2.inc
+./share/megapov-1.2.1/include/shapes_old.inc
+./share/megapov-1.2.1/include/shapesq.inc
+./share/megapov-1.2.1/include/skies.inc
+./share/megapov-1.2.1/include/spiral.df3
+./share/megapov-1.2.1/include/stage1.inc
+./share/megapov-1.2.1/include/stars.inc
+./share/megapov-1.2.1/include/stdcam.inc
+./share/megapov-1.2.1/include/stdinc.inc
+./share/megapov-1.2.1/include/stoneold.inc
+./share/megapov-1.2.1/include/stones.inc
+./share/megapov-1.2.1/include/stones1.inc
+./share/megapov-1.2.1/include/stones2.inc
+./share/megapov-1.2.1/include/strings.inc
+./share/megapov-1.2.1/include/sunpos.inc
+./share/megapov-1.2.1/include/teak.map
+./share/megapov-1.2.1/include/test.png
+./share/megapov-1.2.1/include/textures.inc
+./share/megapov-1.2.1/include/timrom.ttf
+./share/megapov-1.2.1/include/tone_mapping.inc
+./share/megapov-1.2.1/include/transforms.inc
+./share/megapov-1.2.1/include/ttffonts.cat
+./share/megapov-1.2.1/include/whiteash.map
+./share/megapov-1.2.1/include/woodmaps.inc
+./share/megapov-1.2.1/include/woods.inc
+./share/megapov-1.2.1/scenes/area_light_refl.pov
+./share/megapov-1.2.1/scenes/attach.pov
+./share/megapov-1.2.1/scenes/bear.pov
+./share/megapov-1.2.1/scenes/camera_view/camera_motion.pov
+./share/megapov-1.2.1/scenes/camera_view/camera_view_desk.pov
+./share/megapov-1.2.1/scenes/camera_view/subviews.pov
+./share/megapov-1.2.1/scenes/chrono.pov
+./share/megapov-1.2.1/scenes/clusglow.pov
+./share/megapov-1.2.1/scenes/date.pov
+./share/megapov-1.2.1/scenes/dispwarp.pov
+./share/megapov-1.2.1/scenes/dispwarp2.pov
+./share/megapov-1.2.1/scenes/drape.pov
+./share/megapov-1.2.1/scenes/exposure.pov
+./share/megapov-1.2.1/scenes/glowlits.pov
+./share/megapov-1.2.1/scenes/hdr/hdr_environment.pov
+./share/megapov-1.2.1/scenes/hdr/hdr_mapping.pov
+./share/megapov-1.2.1/scenes/interpolate_iso.pov
+./share/megapov-1.2.1/scenes/interpolate_test.pov
+./share/megapov-1.2.1/scenes/listed.pov
+./share/megapov-1.2.1/scenes/mblur.pov
+./share/megapov-1.2.1/scenes/mechsim/bar.pov
+./share/megapov-1.2.1/scenes/mechsim/blocks.pov
+./share/megapov-1.2.1/scenes/mechsim/cloth.pov
+./share/megapov-1.2.1/scenes/mechsim/cloth_fixed.pov
+./share/megapov-1.2.1/scenes/mechsim/collide_fast.pov
+./share/megapov-1.2.1/scenes/mechsim/cube.pov
+./share/megapov-1.2.1/scenes/mechsim/glow_sim.pov
+./share/megapov-1.2.1/scenes/mechsim/hysteresis.pov
+./share/megapov-1.2.1/scenes/mechsim/particle.pov
+./share/megapov-1.2.1/scenes/mechsim/planets.pov
+./share/megapov-1.2.1/scenes/mechsim/roll.pov
+./share/megapov-1.2.1/scenes/mechsim/rotate.pov
+./share/megapov-1.2.1/scenes/mechsim/tshirt.pov
+./share/megapov-1.2.1/scenes/mechsim/viscoelastic.pov
+./share/megapov-1.2.1/scenes/nappe.pov
+./share/megapov-1.2.1/scenes/no_radiosity.pov
+./share/megapov-1.2.1/scenes/noisepig.pov
+./share/megapov-1.2.1/scenes/norm_trans.pov
+./share/megapov-1.2.1/scenes/parametric.pov
+./share/megapov-1.2.1/scenes/pat_aoi.pov
+./share/megapov-1.2.1/scenes/pat_proj.pov
+./share/megapov-1.2.1/scenes/postproc/clip_colors.pov
+./share/megapov-1.2.1/scenes/postproc/color_matrix.pov
+./share/megapov-1.2.1/scenes/postproc/convolution_matrix.pov
+./share/megapov-1.2.1/scenes/postproc/depth.pov
+./share/megapov-1.2.1/scenes/postproc/find_edges.pov
+./share/megapov-1.2.1/scenes/postproc/ppcontent.inc
+./share/megapov-1.2.1/scenes/projection.pov
+./share/megapov-1.2.1/scenes/radiosity_improvements.pov
+./share/megapov-1.2.1/scenes/sor_spline.pov
+./share/megapov-1.2.1/scenes/splines.pov
+./share/megapov-1.2.1/scenes/test_motion.pov
+./share/megapov-1.2.1/scenes/textalign.pov
+./share/megapov-1.2.1/scenes/tone_mapping.pov
+./share/megapov-1.2.1/scenes/torus_uv.pov
+./share/megapov-1.2.1/scripts/dummy.sh
+
+** POVRAY 3.7:
+- download and extract POVRay generic Unix source from http://www.povray.org/beta/source/ :
+curl -O http://www.povray.org/beta/source/povray-3.7.0.RC6.tar.gz
+tar zxvf povray-3.7.0.RC6.tar.gz
+- patch for boost >= 1.50:
+cd povray-3.7.0.RC6
+patch -p0 -d. < /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/ports/graphics/povray/files/patch-boost-1.50.diff
+- other patches:
+patch -p0 -d. < /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/ports/graphics/povray/files/patch-configure-stat.diff
+patch -p0 -d. < /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/ports/graphics/povray/files/patch-lseek64.diff
+patch -p0 -d. < /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/ports/graphics/povray/files/patch-vfe-uint.diff
+- configure
+./configure  --prefix=/opt/povray --host=x86_64-apple-darwin10 --build=x86_64-apple-darwin10 CXXFLAGS="-arch x86_64 -O3 -ffast-math -msse3 -mssse3" CFLAGS="-arch x86_64 -O3 -ffast-math -msse3 -mssse3" LDFLAGS="-L/opt/local/lib -L/opt/X11/lib" CPPFLAGS="-I/opt/local/include -I/opt/X11/include" --with-x COMPILED_BY="Frederic Devernay <frederic.devernay@m4x.org>" LIBS=-lboost_system-mt --with-boost=/opt/local \
+                    --with-boost-thread \
+                    --with-libjpeg=/opt/local \
+                    --with-libpng=/opt/local \
+                    --with-libsdl=/opt/local \
+                    --with-libtiff=/opt/local \
+                    --with-openexr=/opt/local \
+                    --with-zlib=/opt/local
+

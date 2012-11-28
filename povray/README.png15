@@ -1,0 +1,3 @@
+This patch was taken from the FreeBSD patch for povray :
+pkgsrc/current/pkgsrc/graphics/povray/patches/patch-af
+There are two versions: one for povray, and one for megapov

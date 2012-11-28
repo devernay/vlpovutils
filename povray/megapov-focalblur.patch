@@ -1,0 +1,78 @@
+--- megapov-1.2.1/source/render.cpp.orig	2012-11-24 09:37:32.000000000 +0100
++++ megapov-1.2.1/source/render.cpp	2012-11-24 10:22:11.000000000 +0100
+@@ -632,12 +632,13 @@
+     {
+       /* Get sub-pixel grid size (I want it to be odd). */
+ 
+-      Grid_Size = (int)sqrt((DBL)Frame.Camera->Blur_Samples) + 1;
+-
+-      if ((Grid_Size & 1) == 0)
+-      {
+-        Grid_Size++;
+-      }
++      /* this version, using uniform sampling on a disc rather than a square,
++         was backported from povray-3.7.0.RC6/source/backend/render/tracepixel.cpp
++         The Sample_Grid disc has a radius = 0.5
++         The resulting blur disc has a radius = 0.5 * aperture * 0.5 = 0.25*aperture (see jitter_camera_ray()) */
++      size_t remain = Frame.Camera->Blur_Samples * 10;
++      double minGridRadius = sqrt(Frame.Camera->Blur_Samples / M_PI);
++      Grid_Size = 2 * (int)ceil(minGridRadius) + 1;
+ 
+       /* Allocate temporary grid. */
+ 
+@@ -660,23 +661,41 @@
+ 
+       /* Distribute remaining samples. */
+ 
+-      for (i = Standard_Sample_Grid_Size; i < Frame.Camera->Blur_Samples; )
++      for (i = Standard_Sample_Grid_Size; i < Frame.Camera->Blur_Samples; ++i)
+       {
+-        xi = POV_RAND() % Grid_Size;
+-        yi = POV_RAND() % Grid_Size;
+-
+-        if (!Grid[yi][xi])
++        /* generate points on a disc of radius 0.5 */
++        double rho = sqrt(FRAND())*0.5;
++        double theta = FRAND()*2*M_PI;
++        double x = rho*cos(theta);
++        double y = rho*sin(theta);
++        xi = (int)((x + 0.5) * (DBL)Grid_Size);
++        if (xi > Grid_Size - 1) {
++            xi = Grid_Size - 1;
++        }
++        yi = (int)((y + 0.5) * (DBL)Grid_Size);
++        if (yi > Grid_Size - 1) {
++            yi = Grid_Size - 1;
++        }
++        --remain;
++        while ((Grid[yi][xi] || (rho > 0.5)) && (remain > Frame.Camera->Blur_Samples - i))
+         {
+-          x = (DBL)(2 * xi + 1) / (DBL)(2 * Grid_Size) - 0.5;
+-          y = (DBL)(2 * yi + 1) / (DBL)(2 * Grid_Size) - 0.5;
+-
+-          Sample_Grid[i].x = x;
+-          Sample_Grid[i].y = y;
+-
+-          Grid[yi][xi] = true;
+-
+-          i++;
++          rho = sqrt(FRAND())*0.5;
++          theta = FRAND()*2*M_PI;
++          x = rho*cos(theta);
++          y = rho*sin(theta);
++          xi = (int)((x + 0.5) * (DBL)Grid_Size);
++          if (xi > Grid_Size - 1) {
++              xi = Grid_Size - 1;
++          }
++          yi = (int)((y + 0.5) * (DBL)Grid_Size);
++          if (yi > Grid_Size - 1) {
++              yi = Grid_Size - 1;
++          }
++          --remain;
+         }
++        Sample_Grid[i].x = x;
++        Sample_Grid[i].y = y;
++        Grid[yi][xi] = true;
+       }
+ 
+       /* Free temporary grid. */
