@@ -1,9 +1,13 @@
-This library allows the correct extraction of the camera parameters from POV-Ray images
-generated using the VLPov patch:
+VLPovUtils 1.0
+by Frederic Devernay <frederic.devernay@inria.fr>
+(c) INRIA 2012
+
+This software allows the correct extraction of the camera parameters from POV-Ray images
+generated using the MegaPOV with the "annotation" patch from VLPov:
 - VLPov, a set of utilities to use the POV-Ray raytracer in order to generate and analyze
   Computer Vision datasets. http://www.vlfeat.org/~vedaldi/code/vlpovy.html
 
-Using this library and a vlpov-patched POVRay, you can for example:
+Using this software and a vlpov-patched POVRay, you can for example:
 - generate ground truth optical flow from camera motion with ray-traced images
 - generate ground truth disparity maps
 
@@ -20,72 +24,90 @@ stereoscopic pairs with POV-Ray:
 - "Creating stereoscopic left-right image pairs with POVRay" http://www.triplespark.net/render/stereo/create.html
 - "Paul Bourke on PovRay" http://paulbourke.net/exhibition/vpac/povray.html
 
+*** Generating data with MegaPOV and the annotation patch (aka VLPov)
+
 Here is how to generate some individual frames from the sample scenes:
 
 mkdir results; cd results
 megapov +w320 +h240 +a0.0 +j0.0 +L../data +Itest.pov +Otest.png
 
+An animation with 30 frames and a forward motion:
+
 megapov +w320 +h240 +a0.0 +j0.0 +L../data +KFI1 +KFF30 +KI0.0 +KF3.0 +Itest_anim.pov +Otest_anim.png
 
+A camera with non-orthogonal principal axes:
+
 megapov -UV +w320 +h240 +a0.0 +j0.0 +L../data +Itest_nonortho.pov +Otest_nonortho.png
+
+A multi-viewpoint stereo set, with 10 viewpoints (output images are rectified):
+
 megapov -UV +w320 +h240 +a0.0 +j0.0 +L../data +KFI1 +KFF10 +KI0.0 +KF1.0 +Itest_stereo.pov +Otest_stereo.png
 
-*** POV-Ray scenes
+*** Computing motion fields (optical flow) and disparity maps
 
-You can get more POV-Ray scenes from:
+Suppose you generated frame1.png and frame2.png with megapov, together with the files created by the annotation patch (frame1.depth, frame1.txt, frame2.depth, frame2.txt).
 
-** patio
+There are 3 utilities: vlpov_project, vlpov_motionfield, vlpov_motionfield2. The description of each utility is described below.
 
-* getting it
+* vlpov_poject
 
-http://www.ignorancia.org/en/index.php?page=Patio
+Usage: vlpov_project <frame1> [<frame2>]
+Help: Compute the projection (x, y, depth) of 3D points in <frame1> and
+      optionally pixel motion to <frame2>.
+      3D points coordinates are read from standard input.
+Arguments:
+<frame1> base frame basename (file with extension .txt will be read)
+<frame2> second frame basename (file with extension .txt will be read)
 
-requires:
-- http://www.ignorancia.org/en/index.php?page=Lightsys
-- http://www.aust-manufaktur.de/tomtree.zip
+*Important note*: The 3D points must be given in a right-handed coordinate
+                  system, where the Z is the *opposite* of POV-Ray's Z.
 
-apply patch patio.patch found in the data dir:
+* vlpov_motionfield
 
-(cd ../data; patch -p0 -d. < patio.patch)
+Usage: vlpov_motionfield <frame1> <frame2>
+Help: Compute a motion field from a POV-Ray rendered depth map to another camera
+      The motion field is written to <frame1>.<frame2>.mx and
+      and <frame1>.<frame2>.my as raw images containing big-endian
+     (network-order) doubles - the same format as the depth map.
+Arguments:
+<frame1> first frame basename (files with extensions .depth and .txt will be 
+         read)
+<frame2> second frame basename (file with extension .txt will be read)
+Output files:
+<frame1>.<frame2>.mx motion field, x-component (raw big-endian doubles)
+<frame1>.<frame2>.my motion field, y-component (raw big-endian doublest)
 
-* radiosity
+* vlpov_motionfield2
 
-in order to apply radiosity:
-change in patio/patio.pov the line
-#declare usar_rad=0;
-to
-#declare usar_rad=2;
+Usage: vlpov_motionfield2 <frame1> <frame2>
+Help: Compute a motion field from a POV-Ray rendered depth map to another camera
+Arguments:
+<frame1> first frame basename (files with extensions .depth and .txt will be 
+         read)
+<frame2> second frame basename (files with extensions .depth and .txt will be 
+         read)
+Output files (all are in TIFF format):
+<frame1>.<frame2>.mx.tif motion field, x-component (1-channel float)
+<frame1>.<frame2>.my.tif motion field, y-component (1-channel float)
+<frame1>.<frame2>.occ.tif occlusion map (1-channel uchar, 255=visible, 0=occluded)
+<frame2>.<frame1>.mx.tif motion field, x-component (1-channel float)
+<frame2>.<frame1>.my.tif motion field, y-component (1-channel float)
+<frame2>.<frame1>.occ.tif occlusion map (1-channel uchar, 255=visible, 0=occluded)
 
-then, run one rendering. This will save a radiosity file "patio.rad" in the current directory.
-for subsequent renderings *from the same point of view*, change the line to
-#declare usar_rad=1;
-This will load the radiosity file and thus save computations.
+*** Library (libvlpov)
 
-* rendering: keep the 4/3 aspect ratio!
+All the functionalities are also directly accessible from C or C++ using libvlpov.
+See the library header (vlpov.hpp) for the documentation.
+The library replicates some of the functionalities of the Matlab files distributed with VLPov
+<http://www.vlfeat.org/~vedaldi/code/vlpovy.html>.
 
-Note: antialiasing should be used if there is no focal blur (remove the options +A0.0 +J0.0, which mean perform 3x3 antialiasing on every pixel)
+*** Other POV-Ray scenes
 
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo.pov +Opatio_stereo1.png
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_far.pov +Opatio_stereo1_far.png
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_near.pov +Opatio_stereo1_near.png
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_near2.pov +Opatio_stereo1_near2.png 
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo_far2.pov +Opatio_stereo1_far2.png 
-megapov +Q9 -UV +w1152 +h864 +A0.0 +J0.0 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K0.0 +Ipatio_stereo.pov +Opatio_stereo1_all.png
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo.pov +Opatio_stereo2.png
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_far.pov +Opatio_stereo2_far.png
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_near.pov +Opatio_stereo2_near.png
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_near2.pov +Opatio_stereo2_near2.png 
-megapov +Q9 -UV +w1152 +h864 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo_far2.pov +Opatio_stereo2_far2.png 
-megapov +Q9 -UV +w1152 +h864 +A0.0 +J0.0 +L../data +L../data/patio +L../data/patio/maps +L../data/LightsysIV +L../data/tomtree +K1.0 +Ipatio_stereo.pov +Opatio_stereo2_all.png
-wait
-../build/Release/vlpov_motionfield2 patio_stereo1_all patio_stereo2_all
+Realistic POV-Ray scenes with source files can be found at various places.
 
- (echo -270 -20 -270 && echo 0 -6 0) | ../../../build/Release/vlpov_project patio_stereo1_all patio_stereo2_all
+Good starting points are:
+http://www.ignorancia.org
+http://hof.povray.org
 
-** other scenes
-
-http://www.ignorancia.org/en/index.php?page=Childhood
-http://www.ignorancia.org/en/index.php?page=Gardens
-http://www.ignorancia.org/en/index.php?page=The_office
-http://www.ignorancia.org/en/index.php?page=IRTC_entries
-http://hof.povray.org/
+The following is based on the Patio scene by Jaime Piquerez, with various settings of focal blur:
+http://devernay.free.fr/vision/focus/patio/

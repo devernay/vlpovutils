@@ -24,7 +24,10 @@ using namespace boost::numeric::ublas;
 "Arguments:\n"\
 "<frame1> first frame basename (files with extensions .depth and .txt will be \n"\
 "         read)\n"\
-"<frame2> second frame basename (file with extension .txt will be read)\n"
+"<frame2> second frame basename (file with extension .txt will be read)\n"\
+"Output files:\n"\
+"<frame1>.<frame2>.mx motion field, x-component (raw big-endian doubles)\n"\
+"<frame1>.<frame2>.my motion field, y-component (raw big-endian doublest)\n"\
 
 /* Return the basename of a pathname.
  This file is in the public domain. */
