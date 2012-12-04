@@ -70,9 +70,11 @@ static void tiff_head (struct tiff_hdr *th, int width, int height, int colors, i
     struct tm *t;
     int output_bps = bytes_per_sample*8;
     time_t timestamp = time(NULL);
-    
+    const int x = 1;
+    return ((unsigned char*)&x)[0]?false:true;
+
     memset (th, 0, sizeof *th);
-    th->order = (uint16_t)(htonl(0x4d4d4949) >> 16);
+    th->order = ((unsigned char*)&x)[0] ? 0x4949 : 0x4d4d; //(uint16_t)(htonl(0x4d4d4949) >> 16);
     th->magic = 42;
     th->ifd = 10;
     tiff_set (&th->ntag, 254, 4, 1, 0); /* SUBFILETYPE=0 */
@@ -123,8 +125,8 @@ static void tiff_head (struct tiff_hdr *th, int width, int height, int colors, i
     if (desc) {
         strncpy (th->desc, desc, 512);
     }
-    strncpy (th->make, "INRIA", 64); /* TODO: use Blinky vendor */
-    strncpy (th->model, "vlpovutils", 64); /* TODO: use Blinky model */
+    strncpy (th->make, "INRIA", 64);
+    strncpy (th->model, "vlpovutils", 64);
     
     /* Adobe DNG support:
      - for RAW data with PHOTOMETRIC=CFA

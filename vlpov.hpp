@@ -10,6 +10,7 @@
 #ifndef __VLPOV_HPP__
 #define __VLPOV_HPP__
 
+#include <cstdio>
 #include "small.hpp"
 
 class VLPovCamera {
