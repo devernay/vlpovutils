@@ -15,7 +15,9 @@ CMakeFiles
 *.perspectivev3
 xcuserdata
 *.patch
+dist-exclude
 vlpov_motionfield
 vlpov_motionfield2
 vlpov_project
 results
+project.xcworkspace

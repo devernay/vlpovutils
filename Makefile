@@ -74,7 +74,7 @@ vlpov_motionfield2_SOURCES_CPP = \
 	vlpov_motionfield2.cpp
 
 vlpov_project_SOURCES_CPP = \
-	vlpov_motionfield2.cpp
+	vlpov_project.cpp
 
 vlpov_HEADERS = \
 	vlpov.hpp

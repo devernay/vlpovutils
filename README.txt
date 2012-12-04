@@ -4,7 +4,7 @@ by Frederic Devernay <frederic.devernay@inria.fr>
 (c) INRIA 2012
 
 This software allows the correct extraction of the camera parameters from POV-Ray images
-generated using the MegaPOV with the "annotation" patch from VLPov by Andrea Vedaldi:
+generated using MegaPOV 1.2.1 with the "annotation" patch from VLPov by Andrea Vedaldi:
 - VLPov, a set of utilities to use the POV-Ray raytracer in order to generate and analyze
   Computer Vision datasets. http://www.vlfeat.org/~vedaldi/code/vlpovy.html
 (the annotation patch and other useful povray patches are also included with this software,
@@ -61,7 +61,7 @@ megapov -UV +w320 +h240 +a0.0 +j0.0 +L../data +KFI1 +KFF10 +KI0.0 +KF1.0 +Itest_
 
 Suppose you generated frame1.png and frame2.png with megapov, together with the files created by the annotation patch (frame1.depth, frame1.txt, frame2.depth, frame2.txt).
 
-There are 3 utilities: vlpov_project, vlpov_motionfield, vlpov_motionfield2. The description of each utility is described below.
+There are 3 utilities: vlpov_project, vlpov_motionfield, vlpov_motionfield2. The description of each utility is given below.
 
 * vlpov_poject
 
@@ -115,7 +115,7 @@ See the library header (vlpov.hpp) for the documentation.
 The library replicates some of the functionalities of the Matlab files distributed with VLPov
 <http://www.vlfeat.org/~vedaldi/code/vlpovy.html>.
 
-*** Other POV-Ray scenes
+*** POV-Ray scenes
 
 Realistic POV-Ray scenes with source files can be found at various places.
 
