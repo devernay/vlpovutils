@@ -71,7 +71,6 @@ static void tiff_head (struct tiff_hdr *th, int width, int height, int colors, i
     int output_bps = bytes_per_sample*8;
     time_t timestamp = time(NULL);
     const int x = 1;
-    return ((unsigned char*)&x)[0]?false:true;
 
     memset (th, 0, sizeof *th);
     th->order = ((unsigned char*)&x)[0] ? 0x4949 : 0x4d4d; //(uint16_t)(htonl(0x4d4d4949) >> 16);
