@@ -22,9 +22,7 @@ LDFLAGS			?=
 
 BOOST_PATH		?= /usr/include
 BOOST_LIBDIR		?= /usr/lib
-BOOST_CPPFLAGS		?= -I$(BOOST_PATH)/boost/tr1/tr1 -I$(BOOST_PATH)
-## use the following if boost is installed in /usr/include:
-#BOOST_CPPFLAGS		?= -DBOOST_TR1_DISABLE_INCLUDE_NEXT -I$(BOOST_PATH)/boost/tr1/tr1 -I$(BOOST_PATH)
+BOOST_CPPFLAGS		?= -I$(BOOST_PATH)
 
 #BOOST_LDFLAGS		?= -L$(BOOST_LIBDIR)
 #BOOST_LIB_SUFFIX	?= -mt
