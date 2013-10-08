@@ -73,6 +73,17 @@ static void tiff_head (struct tiff_hdr *th, int width, int height, int colors, i
     const int x = 1;
 
     memset (th, 0, sizeof *th);
+    if (desc) {
+        strncpy (th->desc, desc, 512);
+    }
+    strncpy (th->make, "INRIA", 64);
+    strncpy (th->model, "vlpovutils", 64);
+    strcpy (th->soft, "vlpov_motionfield2");
+    t = gmtime (&timestamp);
+    sprintf (th->date, "%04d:%02d:%02d %02d:%02d:%02d",
+             t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min,t->tm_sec);
+    //strncpy (th->artist, artist, 64);
+
     th->order = ((unsigned char*)&x)[0] ? 0x4949 : 0x4d4d; //(uint16_t)(htonl(0x4d4d4949) >> 16);
     th->magic = 42;
     th->ifd = 10;
@@ -89,10 +100,10 @@ static void tiff_head (struct tiff_hdr *th, int width, int height, int colors, i
     tiff_set (&th->ntag, 259, 3, 1, 1); /* COMPRESSION=NONE */
     tiff_set (&th->ntag, 262, 3, 1, 1 + (colors > 1)); /* PHOTOMETRIC= MINISBLACK or RGB (CFA is 32803, LINEAR RAW is 34892) */ 
     if (desc) {
-        tiff_set (&th->ntag, 270, 2, 512, TOFF(th->desc));  /* IMAGEDESCRIPTION */
+      tiff_set (&th->ntag, 270, 2, strlen(th->desc)+1, TOFF(th->desc));  /* IMAGEDESCRIPTION */
     }
-    tiff_set (&th->ntag, 271, 2, 64, TOFF(th->make));  /* MAKE */
-    tiff_set (&th->ntag, 272, 2, 64, TOFF(th->model));  /* MODEL */
+    tiff_set (&th->ntag, 271, 2, strlen(th->make)+1, TOFF(th->make));  /* MAKE */
+    tiff_set (&th->ntag, 272, 2, strlen(th->model)+1, TOFF(th->model));  /* MODEL */
     //if (full) {
     //if (oprof) psize = ntohl(oprof[0]);
     tiff_set (&th->ntag, 273, 4, 1, sizeof *th + psize);  /* STRIPOFFSETS */
@@ -105,9 +116,9 @@ static void tiff_head (struct tiff_hdr *th, int width, int height, int colors, i
     //tiff_set (&th->ntag, 283, 5, 1, TOFF(th->rat[8]));  /* YRESOLUTION */
     tiff_set (&th->ntag, 284, 3, 1, 1);   /* PLANARCONFIG=CONTIG */
     //tiff_set (&th->ntag, 296, 3, 1, 2);   /* RESOLUTIONUNIT=INCH */
-    tiff_set (&th->ntag, 305, 2, 32, TOFF(th->soft));  /* SOFTWARE */
-    tiff_set (&th->ntag, 306, 2, 20, TOFF(th->date));  /* DATETIME */
-    //tiff_set (&th->ntag, 315, 2, 64, TOFF(th->artist));  /* ARTIST */
+    tiff_set (&th->ntag, 305, 2, strlen(th->soft)+1, TOFF(th->soft));  /* SOFTWARE */
+    tiff_set (&th->ntag, 306, 2, strlen(th->date)+1, TOFF(th->date));  /* DATETIME */
+    //tiff_set (&th->ntag, 315, 2, strlen(th->artist)+1, TOFF(th->artist));  /* ARTIST */
     tiff_set (&th->ntag, 339, 3, 1, isfloat ? 3 : 1);  /* SAMPLEFORMAT (3: float 1: uint) */
     //tiff_set (&th->ntag, 34665, 4, 1, TOFF(th->nexif));  /* EXIFIFD */
     //if (psize) tiff_set (&th->ntag, 34675, 7, psize, sizeof *th); /* ICCPROFILE */
@@ -121,11 +132,6 @@ static void tiff_head (struct tiff_hdr *th, int width, int height, int colors, i
     //th->rat[4] *= focal_len;
     //th->rat[6] = th->rat[8] = 300;
     //th->rat[7] = th->rat[9] = 1;
-    if (desc) {
-        strncpy (th->desc, desc, 512);
-    }
-    strncpy (th->make, "INRIA", 64);
-    strncpy (th->model, "vlpovutils", 64);
     
     /* Adobe DNG support:
      - for RAW data with PHOTOMETRIC=CFA
@@ -150,13 +156,6 @@ static void tiff_head (struct tiff_hdr *th, int width, int height, int colors, i
     //th->dngversion[3] = 0;
     //tiff_set (&th->ntag, 50708, 2, 128, TOFF(th->cameramodel));  /* TODO: use Blinky vendor+model */
     //tiff_set (&th->ntag, 50717, 3, 1, (int16_t)(0xffff<<(16-buffer->header.bpp)));  /* WHITELEVEL=max image level */
-    
-    
-    strcpy (th->soft, "vlpov_motionfield2");
-    t = gmtime (&timestamp);
-    sprintf (th->date, "%04d:%02d:%02d %02d:%02d:%02d",
-             t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min,t->tm_sec);
-    //strncpy (th->artist, artist, 64);
 }
 
 static void tiff_save(const VLPovImage<double> &img, const char *fname, const char *desc)
