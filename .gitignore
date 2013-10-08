@@ -4,11 +4,8 @@
 *moc*.cpp
 *moc
 build*
-*html*
 *latex*
 DerivedData/*
-*.xcodeproj
-*.sln
 *.xcworkspace
 *xcuserdata
 *.perspectivev3
@@ -17,15 +14,7 @@ DerivedData/*
 *Release
 *release
 *debug
-Cache
-TestImages
-TestWrite
-TODO.txt
 .pro.user
-config.pri
-*.xcodeproj
-*.vcxproj
-*Info.plist
 *Win32
 *qrc_Resources.cpp
 *GeneratedFiles
