@@ -3,36 +3,45 @@ version 1.0 (28/11/2012)
 by Frederic Devernay <frederic.devernay@inria.fr>
 (c) INRIA 2012
 
-This software allows the correct extraction of the camera parameters from POV-Ray images
-generated using MegaPOV 1.2.1 with the "annotation" patch from VLPov by Andrea Vedaldi:
-- VLPov, a set of utilities to use the POV-Ray raytracer in order to generate and analyze
-  Computer Vision datasets. http://www.vlfeat.org/~vedaldi/code/vlpovy.html
-(the annotation patch and other useful povray patches are also included with this software,
-see in the "povray" subdirectory)
+This software allows the correct extraction of the camera parameters
+from POV-Ray images generated using MegaPOV 1.2.1 with the
+"annotation" patch from VLPov by Andrea Vedaldi:
+- VLPov, a set of utilities to use the POV-Ray raytracer in order to
+  generate and analyze Computer Vision
+  datasets. http://www.vlfeat.org/~vedaldi/code/vlpovy.html
+
+(the annotation patch and other useful povray patches are also
+included with this software, see in the "povray" subdirectory)
 
 Using this software and a vlpov-patched POVRay, you can for example:
-- generate ground truth optical flow from camera motion with ray-traced images
+- generate ground truth optical flow from camera motion with
+  ray-traced images
 - generate ground truth disparity maps
 
-This library also handles POV-Ray renders where the up, right and dir vectors of the
-POV-Ray camera don't form an orthonormal set. This allows for cameras with:
-- the principal point not at the image center (very useful for stereoscopic rendering)
+This library also handles POV-Ray renders where the up, right and dir
+vectors of the POV-Ray camera don't form an orthonormal set. This
+allows for cameras with:
+- the principal point not at the image center (very useful for
+  stereoscopic rendering)
 - non-orthogonal x and y axes
 
-In order to render these images, the Vista buffer feature of POV-Ray must be disabled
-(option -UV in megapov).
+In order to render these images, the Vista buffer feature of POV-Ray
+must be disabled (option -UV in megapov).
 
 Please check out the following documentation on how to create
 stereoscopic pairs with POV-Ray:
-- "Creating stereoscopic left-right image pairs with POVRay" http://www.triplespark.net/render/stereo/create.html
-- "Paul Bourke on PovRay" http://paulbourke.net/exhibition/vpac/povray.html
+- "Creating stereoscopic left-right image pairs with POVRay"
+  http://www.triplespark.net/render/stereo/create.html
+- "Paul Bourke on PovRay"
+  http://paulbourke.net/exhibition/vpac/povray.html
 
 ** Compiling
 
-This softwate requires the ublas component from BOOST (www.boost.org), so you may need
-to install development files for boost-ublas.
+This softwate requires the ublas component from BOOST (www.boost.org),
+so you may need to install development files for boost-ublas.
 
-On Linux/Unix, check out if the settings in the Makefile correspond to your system and type "make".
+On Linux/Unix, check out if the settings in the Makefile correspond to
+your system and type "make".
 
 There is also an Xcode project for Mac OS X.
 
@@ -53,15 +62,19 @@ A camera with non-orthogonal principal axes:
 
 megapov -UV +w320 +h240 +a0.0 +j0.0 +L../data +Itest_nonortho.pov +Otest_nonortho.png
 
-A multi-viewpoint stereo set, with 10 viewpoints (output images are rectified):
+A multi-viewpoint stereo set, with 10 viewpoints (output images are
+rectified):
 
 megapov -UV +w320 +h240 +a0.0 +j0.0 +L../data +KFI1 +KFF10 +KI0.0 +KF1.0 +Itest_stereo.pov +Otest_stereo.png
 
 *** Computing motion fields (optical flow) and disparity maps
 
-Suppose you generated frame1.png and frame2.png with megapov, together with the files created by the annotation patch (frame1.depth, frame1.txt, frame2.depth, frame2.txt).
+Suppose you generated frame1.png and frame2.png with megapov, together
+with the files created by the annotation patch (frame1.depth,
+frame1.txt, frame2.depth, frame2.txt).
 
-There are 3 utilities: vlpov_project, vlpov_motionfield, vlpov_motionfield2. The description of each utility is given below.
+There are 3 utilities: vlpov_project, vlpov_motionfield,
+vlpov_motionfield2. The description of each utility is given below.
 
 * vlpov_poject
 
@@ -73,8 +86,8 @@ Arguments:
 <frame1> base frame basename (file with extension .txt will be read)
 <frame2> second frame basename (file with extension .txt will be read)
 
-*Important note*: The 3D points must be given in a right-handed coordinate
-                  system, where the Z is the *opposite* of POV-Ray's Z.
+*Important note*: The 3D points must be given in a right-handed
+  coordinate system, where the Z is the *opposite* of POV-Ray's Z.
 
 * vlpov_motionfield
 
@@ -110,18 +123,22 @@ Output files (all are in TIFF format):
 
 *** Library (libvlpov)
 
-All the functionalities are also directly accessible from C or C++ using libvlpov.
+All the functionalities are also directly accessible from C or C++
+using libvlpov.
 See the library header (vlpov.hpp) for the documentation.
-The library replicates some of the functionalities of the Matlab files distributed with VLPov
+The library replicates some of the functionalities of the Matlab files
+distributed with VLPov
 <http://www.vlfeat.org/~vedaldi/code/vlpovy.html>.
 
 *** POV-Ray scenes
 
-Realistic POV-Ray scenes with source files can be found at various places.
+Realistic POV-Ray scenes with source files can be found at various
+places.
 
 Good starting points are:
 http://www.ignorancia.org
 http://hof.povray.org
 
-The following is based on the Patio scene by Jaime Piquerez, with various settings of focal blur:
+The following is based on the Patio scene by Jaime Piquerez, with
+various settings of focal blur:
 http://devernay.free.fr/vision/focus/patio/
