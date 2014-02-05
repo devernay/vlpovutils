@@ -13,6 +13,8 @@
 #include <string>
 #include <limits>
 #include <cstdio>
+#include <cstdint>
+#include <cstring>
 #include <boost/numeric/ublas/io.hpp>
 
 using namespace std;
