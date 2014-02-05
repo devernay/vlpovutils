@@ -1,0 +1,11 @@
+language: cpp
+compiler:
+  - gcc
+  - clang
+
+install:
+  - sudo apt-get install libboost-dev
+
+script:
+  - make
+

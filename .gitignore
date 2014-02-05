@@ -169,3 +169,8 @@ $RECYCLE.BIN/
 
 Makefile
 *.app
+*.P
+*.a
+vlpov_motionfield
+vlpov_motionfield2
+vlpov_project
