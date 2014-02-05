@@ -1,4 +1,5 @@
-VLPovUtils
+VLPovUtils   [![Build Status](https://api.travis-ci.org/devernay/vlpovutils.png?branch=master)](https://travis-ci.org/devernay/openfx) [![Coverage Status](https://coveralls.io/repos/devernay/vlpovutils/badge.png?branch=master)](https://coveralls.io/r/devernay/openfx?branch=master) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/devernay/vlpovutils/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+==========
 version 1.0 (28/11/2012)
 by Frederic Devernay <frederic.devernay@inria.fr>
 (c) INRIA 2012
