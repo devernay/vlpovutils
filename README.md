@@ -143,3 +143,7 @@ http://hof.povray.org
 The following is based on the Patio scene by Jaime Piquerez, with
 various settings of focal blur:
 http://devernay.free.fr/vision/focus/patio/
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/devernay/vlpovutils/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
